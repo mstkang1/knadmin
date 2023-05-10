@@ -1,0 +1,72 @@
+# local, dev, prod 공통 설정
+server:
+  tomcat:
+    uri-encoding: UTF-8
+
+mybatis:
+  type-aliases-package: com.knpharm.knadmin.dto
+  mapper-locations: mybatis/mapper/**/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+
+# Thymleaf
+spring:
+  thymeleaf:
+    prefix: classpath:templates/
+    check-template-location: true
+    suffix: .html
+    mode: HTML
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/knpharm?serverTimezone=Asia/Seoul
+    username: root
+    password: master
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  thymeleaf:
+    cache: false # 개발시에는 수정시 즉시 반영 가능하게.
+server:
+  port: 80
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/kntest?serverTimezone=Asia/Seoul
+    username: kndev
+    password: dev@w2w
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+  thymeleaf:
+    cache: false # 개발시에는 수정시 즉시 반영 가능하게.
+server:
+  port: 8073
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/knpharm?serverTimezone=Asia/Seoul
+    username: knadmin
+    password: kn@w2w
+  thymeleaf:
+    cache: true
+server:
+  port: 8083

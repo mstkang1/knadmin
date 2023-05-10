@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/admin.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <title>메인 - 미놀/PM/자하생력 관리자 페이지</title>
+</head>
+<body>
+    <header>
+        <h1><a href="index.html"><i class="bi bi-gear-fill"></i>관리자 페이지</a></h1>
+        <div class="navbar-wrap">
+            <div class="nav-item">
+                <ul>
+                    <li><a class="nav-link" href="password-edit.html"><i class="bi bi-key"></i> 비밀번호 변경</a></li>
+                    <li><a class="nav-link" href="login.html"><i class="bi bi-person-x-fill"></i> 로그아웃</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="admin-wrap">
+        <!-- 사이드바 영역 -->
+        <div class="admin-menu">
+            <h2>Menu</h2>
+            <ul>
+                <li>
+                    <button><i class="bi bi-list"></i>미놀</button>
+                    <ul>
+                        <li><a href="minol-banner-list.html"><i class="bi bi-image"></i>배너관리</a></li>
+                        <li class="on"><a href="minol-popup-list.html"><i class="bi bi-window-x"></i>팝업관리</a></li>
+                        <li><a href="minol-product-list.html"><i class="bi bi-card-text"></i>제품설명</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button><i class="bi bi-list"></i>PM</button>
+                    <ul>
+                        <li><a href="#"><i class="bi bi-image"></i>배너관리</a></li>
+                        <li><a href="#"><i class="bi bi-window-x"></i>팝업관리</a></li>
+                        <li><a href="#"><i class="bi bi-card-text"></i>제품설명</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button><i class="bi bi-list"></i></i>자하생력</button>
+                    <ul>
+                        <li><a href="#"><i class="bi bi-window-x"></i>팝업관리</a></li>
+                        <li><a href="#"><i class="bi bi-card-text"></i>제품설명</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button><i class="bi bi-list"></i></i>약국찾기</button>
+                    <ul>
+                        <li><a href="find-pharmacy.html"><i class="bi bi-filetype-xlsx"></i>엑셀 파일업로드</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- 컨텐츠 영역 -->
+        <div class="admin-contents">
+            <div class="admin-contents-header">
+                <h2>팝업관리</h2>
+                <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; 미놀 &gt; 팝업관리 </div>
+            </div>
+            <div class="table-responsive">
+                <form action="minol-banner-edit.html">
+                    <table class="table table-striped">
+                        <colgroup> 
+                            <col width="10%" /> 
+                            <col width="10%" /> 
+                            <col width="32%" />
+                            <col width="15%" />
+                            <col width="15%" /> 
+                            <col width="8%" />
+                            <col width="10%" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col">번호</th>
+                                <th scope="col">제목</th>
+                                <th scope="col">링크</th>
+                                <th scope="col">시작일</th>
+                                <th scope="col">종료일</th>
+                                <th scope="col">노출</th>
+                                <th scope="col">변경</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1번 팝업</td>
+                                <td>null</td>
+                                <td>2023-03-25 12:00</td>
+                                <td>2023-04-01 23:30</td>
+                                <td>사용</td>
+                                <td><a href="minol-popup-edit.html" class="btn btn-secondary btn-sm">수정</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

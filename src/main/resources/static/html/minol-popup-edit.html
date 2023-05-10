@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/admin.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <title>메인 - 미놀/PM/자하생력 관리자 페이지</title>
+</head>
+<body>
+    <header>
+        <h1><a href="index.html"><i class="bi bi-gear-fill"></i>관리자 페이지</a></h1>
+        <div class="navbar-wrap">
+            <div class="nav-item">
+                <ul>
+                    <li><a class="nav-link" href="password-edit.html"><i class="bi bi-key"></i> 비밀번호 변경</a></li>
+                    <li><a class="nav-link" href="login.html"><i class="bi bi-person-x-fill"></i> 로그아웃</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="admin-wrap">
+        <!-- 사이드바 영역 -->
+        <div class="admin-menu">
+            <h2>Menu</h2>
+            <ul>
+                <li>
+                    <button><i class="bi bi-list"></i>미놀</button>
+                    <ul>
+                        <li><a href="minol-banner-list.html"><i class="bi bi-image"></i>배너관리</a></li>
+                        <li class="on"><a href="minol-popup-list.html"><i class="bi bi-window-x"></i>팝업관리</a></li>
+                        <li><a href="minol-product-list.html"><i class="bi bi-card-text"></i>제품설명</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button><i class="bi bi-list"></i>PM</button>
+                    <ul>
+                        <li><a href="#"><i class="bi bi-image"></i>배너관리</a></li>
+                        <li><a href="#"><i class="bi bi-window-x"></i>팝업관리</a></li>
+                        <li><a href="#"><i class="bi bi-card-text"></i>제품설명</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button><i class="bi bi-list"></i></i>자하생력</button>
+                    <ul>
+                        <li><a href="#"><i class="bi bi-window-x"></i>팝업관리</a></li>
+                        <li><a href="#"><i class="bi bi-card-text"></i>제품설명</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <button><i class="bi bi-list"></i></i>약국찾기</button>
+                    <ul>
+                        <li><a href="find-pharmacy.html"><i class="bi bi-filetype-xlsx"></i>엑셀 파일업로드</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!-- 컨텐츠 영역 -->
+        <div class="admin-contents">
+            <div class="admin-contents-header">
+                <h2>팝업관리</h2>
+                <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; 미놀 &gt; 팝업관리 </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-edit">
+                    <colgroup> 
+                        <col width="10%" /> 
+                        <col width="8%" /> 
+                        <col width="45%" />
+                        <col width="37%" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th scope="col">노출여부</th>
+                            <td colspan="3">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                                    <label class="form-check-label" for="inlineRadio1">노출</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                    <label class="form-check-label" for="inlineRadio2">미노출</label>
+                                  </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col">제목</th>
+                            <td colspan="3">
+                                <div class="mt-3 mb-2 col-md-9">
+                                    <input class="form-control" type="text" placeholder="제목을 입력하세요">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col">기간</th>
+                            <td colspan="3">
+                                <div class="datepicker-wrap">
+                                    <div class="row col-md-4 me-1">
+                                        <label for="start" class="mb-2 form-label">시작일</label>
+                                        <div class="col-sm-15">
+                                            <input type="datetime-local" id="start" name="start" value="2023-03-25T00:00" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="row col-md-4">
+                                        <label for="end" class="mb-2 form-label">종료일</label>
+                                        <div class="col-sm-15">
+                                            <input type="datetime-local" id="end" name="end" value="2023-04-25T00:00" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="col" rowspan="4">이미지</th>
+                            <td class="align-center">PC</td>
+                            <td colspan="2">
+                                 <div class="input-group mb-3">
+                                    <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                    <button class="btn btn-secondary" type="button" id="inputGroupFileAddon04">다운로드</button>
+                                </div>
+                                <div class="attention">
+                                    <dl>
+                                        <dt class="red"><i class="bi bi-exclamation-circle"></i> 이미지 파일 업로드 유의사항</dt>
+                                        <dd>- 이미지 규격 : 000px x 000px</dd>
+                                        <dd>- 등록가능 파일 : 2MB 이하 jpg, png 파일</dd>
+                                    </dl>
+                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-center">링크</td>
+                            <td>
+                                <div class="mt-2 mb-2">
+                                    <input class="form-control col-md-8" type="text" placeholder="http://">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline col-sm-10 mt-3 mb-2">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">새 창 열림</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-center">모바일</td>
+                            <td colspan="2">
+                                <div class="input-group mb-3">
+                                    <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                    <button class="btn btn-secondary" type="button" id="inputGroupFileAddon04">다운로드</button>
+                                </div>
+                                <div class="attention">
+                                    <dl>
+                                        <dt class="red"><i class="bi bi-exclamation-circle"></i> 이미지 파일 업로드 유의사항</dt>
+                                        <dd>- 이미지 규격 : 000px x 000px</dd>
+                                        <dd>- 등록가능 파일 : 2MB 이하 jpg, png 파일</dd>
+                                    </dl>
+                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="align-center">링크</td>
+                            <td>
+                                <div class="mt-2 mb-2">
+                                    <input class="form-control col-md-8" type="text" placeholder="http://">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline col-sm-10 mt-3 mb-2">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                    <label class="form-check-label" for="flexCheckDefault">새 창 열림</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-md-flex justify-content-md-end">
+                    <a href="javascript:confirm('팝업 등록을 취소하시겠습니까?');" class="btn btn-secondary me-md-2" type="button">취소</a>
+                    <a href="javascript:confirm('등록을 완료 하시겠습니까?');" class="btn btn-primary" type="button">등록</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
