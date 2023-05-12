@@ -15,10 +15,4 @@ public class IndexController {
         return "index";
     }
 
-
-    @RequestMapping("/terms")
-    public  String terms(Model model) {
-        return "terms";
-    }
-
 }

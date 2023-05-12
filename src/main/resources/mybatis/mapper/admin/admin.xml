@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.knpharm.knadmin.mapper.AdminMapper">
+
+    <!-- 관리자 조회 조회 -->
+    <select id="selectAdmin" parameterType="AdminDto" resultType="AdminDto">
+        <![CDATA[
+        SELECT
+            *
+        FROM TBL_ADMIN
+        WHERE ADMIN_ID = #{adminId}
+          /*AND ADMIN_PASS = #{adminPass}*/
+
+        ]]>
+    </select>
+
+    <insert id="insertAdmin" parameterType="AdminDto">
+        INSERT INTO TBL_ADMIN (ADMIN_ID, ADMIN_PASS, ADMIN_NAME, REGDATE, MODDATE)
+        VALUES(#{adminId}, #{adminPass}, #{adminName}, now(), now());
+    </insert>
+
+    <update id="updateAdmin" parameterType="AdminDto">
+        UPDATE TBL_ADMIN SET
+             ADMIN_PASS = #{adminPass}
+        WHERE ADMIN_SEQ = #{adminSeq};
+    </update>
+
+</mapper>
