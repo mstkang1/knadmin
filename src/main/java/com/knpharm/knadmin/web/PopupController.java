@@ -7,17 +7,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class IndexController {
+@RequestMapping("/popup")
+public class PopupController {
     private Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @RequestMapping(value = {"/", "/index"})
-    public  String index(Model model) {
-        return "index";
+    @RequestMapping(value = "/list")
+    public  String banner(Model model) {
+        return "/popup/list";
     }
 
-    @RequestMapping(value = "/pass")
-    public  String pass(Model model) {
-        return "pass";
+    @RequestMapping(value = "/edit")
+    public  String modify(Model model) {
+        return "/popup/edit";
     }
-
 }

@@ -7,5 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface ProductMapper {
-    List<ProductDto> selectProductList(ProductDto productDto) throws Exception;
+    List<ProductDto> selectProductList(String brandCode) throws Exception;
+
+    ProductDto selectProduct(int productSeq) throws Exception;
+
+    int updateProduct(ProductDto productDto) throws Exception;
 }

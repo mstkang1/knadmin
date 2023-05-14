@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
+</th:block>
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!--    <script th:src="@{/js/page/home.js}"></script>-->
+</th:block>
+
+<!-- 컨텐츠 영역 -->
+<div class="admin-contents" layout:fragment="content">
+    <div class="admin-contents-header">
+        <h2>배너관리</h2>
+        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; 미놀 &gt; 배너관리 </div>
+    </div>
+    <div class="table-responsive">
+        <form action="minol-banner-edit.html">
+            <table class="table table-striped">
+                <colgroup>
+                    <col width="10%" />
+                    <col width="30%" />
+                    <col width="30%" />
+                    <col width="30%" />
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">링크</th>
+                    <th scope="col">변경</th>
+                </tr>
+                </thead>
+                <tbody>
+                at org.thymeleaf.templateparser.markup.AbstractMarkupTemplate
+                <tr th:each="banner : ${bannerList}">
+                    <td th:text="${banner.bannerSeq}"></td>
+                    <td th:text="${banner.bannerName}"></td>
+                    <td>
+                        <a th:href="${banner.bannerPcUrl}" target="_blank"> [[${banner.bannerPcUrl}]]</a><br/>
+                        <a th:href="${banner.bannerMoUrl}" target="_blank"> [[${banner.bannerMoUrl}]]</a>
+                    </td>
+                    <td>
+                        <a th:href="@{edit/{brandCode}/{bannerSeq}(brandCode=${banner.brandSeq},bannerSeq=${banner.bannerSeq})}" th:text="수정" class="btn btn-secondary btn-sm"></a>
+                    </td>
+                <!--<tr>
+                    <td>1</td>
+                    <td>1번 배너</td>
+                    <td>null</td>
+                    <td><a href="./edit" class="btn btn-secondary btn-sm">수정</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>2번 배너</td>
+                    <td>null</td>
+                    <td><a href="./edit" class="btn btn-secondary btn-sm">수정</a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>3번 배너</td>
+                    <td><a href="#" class="link-primary">http://www.minol.co.kr</a></td>
+                    <td><a href="./edit" class="btn btn-secondary btn-sm">수정</a></td>
+                </tr>-->
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</html>

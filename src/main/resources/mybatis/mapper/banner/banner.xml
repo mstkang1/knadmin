@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.knpharm.knadmin.mapper.BannerMapper">
+
+    <!-- 리스트 조회 -->
+    <select id="selectBannerList" parameterType="String" resultType="BannerDto">
+        <![CDATA[
+        SELECT
+            *
+        FROM TBL_BANNER
+        WHERE BRAND_CODE = #{brandCode}
+        ORDER BY BANNER_ORDER ASC
+        ]]>
+    </select>
+
+    <select id="selectBanner" parameterType="int" resultType="BannerDto">
+        <![CDATA[
+        SELECT
+            *
+        FROM TBL_BANNER
+        WHERE BANNER_SEQ = #{bannerSeq}
+        ]]>
+    </select>
+
+
+    <insert id="insertBanner" parameterType="BannerDto">
+        INSERT INTO TBL_BANNER (BRAND_CODE, BANNER_ORDER, BANNER_NAME,
+                                BANNER_PC_URL, BANNER_PC_ORG_FILE_NAME, BANNER_PC_SAVE_FILE_NAME, BANNER_PC_IS_NEW,
+                                BANNER_MO_URL, BANNER_MO_ORG_FILE_NAME, BANNER_MO_SAVE_FILE_NAME, BANNER_MO_IS_NEW,
+                                REGDATE, MODDATE)
+        VALUES(#{brandCode}, #{bannerOrder}, #{bannerName},
+               #{bannerPcUrl}, #{bannerPcOrgFileName}, #{bannerPcSaveFileName}, #{bannerPcIsNew},
+               #{bannerMoUrl}, #{bannerMoOrgFileName}, #{bannerMoSaveFileName}, #{bannerMoIsNew},
+               now(), now());
+    </insert>
+
+    <update id="updateBanner" parameterType="BannerDto">
+        UPDATE TBL_BANNER SET
+            BANNER_NAME = #{bannerName},
+            BANNER_PC_URL = #{bannerPcUrl},
+            BANNER_PC_ORG_FILE_NAME = #{bannerPcOrgFileName},
+            BANNER_PC_SAVE_FILE_NAME = #{bannerPcSaveFileName},
+            BANNER_PC_IS_NEW = #{bannerPcIsNew},
+            BANNER_MO_URL = #{bannerMoUrl},
+            BANNER_MO_ORG_FILE_NAME = #{bannerMoOrgFileName},
+            BANNER_MO_SAVE_FILE_NAME = #{bannerMoSaveFileName},
+            BANNER_MO_IS_NEW = #{bannerMoIsNew},
+            MODDATE = now()
+        WHERE BANNER_SEQ = #{bannerSeq}
+    </update>
+
+</mapper>

@@ -6,14 +6,12 @@
 <mapper namespace="com.knpharm.knadmin.mapper.AdminMapper">
 
     <!-- 관리자 조회 조회 -->
-    <select id="selectAdmin" parameterType="AdminDto" resultType="AdminDto">
+    <select id="selectAdmin" parameterType="String" resultType="AdminDto">
         <![CDATA[
         SELECT
             *
         FROM TBL_ADMIN
         WHERE ADMIN_ID = #{adminId}
-          /*AND ADMIN_PASS = #{adminPass}*/
-
         ]]>
     </select>
 

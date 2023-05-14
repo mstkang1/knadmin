@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Mapper
 public interface AdminMapper {
-    Optional<AdminDto> selectAdmin(AdminDto adminDto);
+    Optional<AdminDto> selectAdmin(String adminId);
 
     int insertAdmin(AdminDto adminDto) throws Exception;
 

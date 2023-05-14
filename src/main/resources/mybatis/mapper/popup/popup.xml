@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.knpharm.knadmin.mapper.PopupMapper">
+
+    <!-- 리스트 조회 -->
+    <select id="selectPopupList" parameterType="String" resultType="PopupDto">
+        <![CDATA[
+        SELECT
+            *
+        FROM TBL_POPUP
+        WHERE BRAND_CDDE = #{brandCode}
+        ]]>
+    </select>
+
+    <select id="selectPopup" parameterType="int" resultType="PopupDto">
+        <![CDATA[
+        SELECT
+            *
+        FROM TBL_POPUP
+        WHERE POPUP_SEQ = #{popupSeq}
+        ]]>
+    </select>
+
+
+    <insert id="insertPopup" parameterType="PopupDto">
+        INSERT INTO TBL_POPUP (BRAND_CODE, POPUP_IS_SHOW, POPUP_START_DATE, POPUP_END_DATE, POPUP_NAME,
+                               POPUP_PC_URL, POPUP_PC_ORG_FILE_NAME, POPUP_PC_SAVE_FILE_NAME, POPUP_PC_IS_NEW,
+                               POPUP_MO_URL, POPUP_MO_ORG_FILE_NAME, `POPUP_ MO_SAVE_FILE_NAME`, POPUP_MO_IS_NEW,
+                               REGDATE, MODDATE)
+        VALUES(#{brandCode}, #{popupIsNew}, #{popupStartDate}, #{popupEndDate}, #{popupName},
+               #{popupPcUrl}, #{popupPcOrgFileName}, #{popupPcSaveFileName}, #{popupPcIsNew},
+               #{popupMoUrl}, #{popupMoOrgFileName}, #{popupMoSaveFileName}, #{popupMoIsNew},
+               now(), now());
+    </insert>
+
+    <update id="updatePopup" parameterType="PopupDto">
+        UPDATE TBL_POPUP SET
+            POPUP_IS_SHOW = #{popupIsNew},
+            POPUP_START_DATE = #{popupStartDate},
+            POPUP_END_DATE = #{popupEndDate},
+            POPUP_NAME = #{popupName},
+            POPUP_PC_URL = #{popupPcUrl},
+            POPUP_PC_ORG_FILE_NAME = #{popupPcOrgFileName},
+            POPUP_PC_SAVE_FILE_NAME = #{popupPcSaveFileName},
+            POPUP_PC_IS_NEW = #{popupPcIsNew},
+            POPUP_MO_URL = #{popupMoUrl},
+            POPUP_MO_ORG_FILE_NAME = #{popupMoOrgFileName},
+            POPUP_MO_SAVE_FILE_NAME = #{popupMoSaveFileName},
+            POPUP_MO_IS_NEW = #{popupMoIsNew},
+            MODDATE = now()
+        WHERE POPUP_SEQ = #{popupSeq}
+    </update>
+
+</mapper>

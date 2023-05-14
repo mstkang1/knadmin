@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
+</th:block>
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!--    <script th:src="@{/js/page/home.js}"></script>-->
+</th:block>
+
+<!-- 컨텐츠 영역 -->
+<div class="admin-contents" layout:fragment="content">
+    <div class="admin-contents-header">
+        <h2>약국찾기</h2>
+        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; 약국찾기 </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-edit">
+            <colgroup>
+                <col width="10%" />
+                <col width="90%" />
+            </colgroup>
+            <tbody>
+            <tr>
+                <th scope="col">파일</th>
+                <td>
+                    <div class="input-group mb-3">
+                        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                        <a href="#" class="btn btn-secondary" type="button" id="inputGroupFileAddon04">확인</a>
+                        <a href="javascript:confirm('파일을 삭제하시겠습니까?')" class="btn btn-danger" type="button" id="inputGroupFileAddon04">삭제</a>
+                    </div>
+                    <div class="excel-sample-file">
+                        <a href="#"><img src="../img/excel-img.png" />엑셀 셈플 파일보기</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</html>

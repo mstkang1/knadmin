@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
+</th:block>
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!--    <script th:src="@{/js/page/home.js}"></script>-->
+</th:block>
+
+<!-- 컨텐츠 영역 -->
+<div class="admin-contents" layout:fragment="content">
+    <div class="admin-contents-header">
+        <h2>비밀번호 변경</h2>
+        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; 비밀번호 변경</div>
+    </div>
+    <div class="password-edit-wrap">
+        <form class="needs-validation" novalidate>
+            <div class="col-form-label">
+                <label for="validationCustom01" class="form-label">현재 비밀번호</label>
+                <input type="text" class="form-control" id="validationCustom01" required>
+                <div class="invalid-feedback">
+                    현재 비밀번호를 입력해주세요.
+                </div>
+            </div>
+            <div class="col-form-label">
+                <label for="validationCustom02" class="form-label">새 비밀번호</label>
+                <input type="text" class="form-control" id="validationCustom02" required>
+                <div class="invalid-feedback">
+                    새 비밀번호를 입력해주세요.
+                </div>
+            </div>
+            <div class="col-form-label mb-2">
+                <label for="validationCustom03" class="form-label">새 비밀번호 확인</label>
+                <input type="text" class="form-control" id="validationCustom03" required>
+                <div class="invalid-feedback">
+                    변경할 비밀번호가 다릅니다.
+                </div>
+            </div>
+            <div class="d-md-flex justify-content-md-end">
+                <a href="javascript:confirm('배너 등록을 취소하시겠습니까?');" class="btn btn-secondary me-md-2" type="button">취소</a>
+                <button class="btn btn-primary" type="submit">등록</button>
+            </div>
+        </form>
+        <script>
+            // Example starter JavaScript for disabling form submissions if there are invalid fields
+            (() => {
+                'use strict'
+
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                const forms = document.querySelectorAll('.needs-validation')
+
+                // Loop over them and prevent submission
+                Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+            })()
+        </script>
+    </div>
+</div>
+</html>

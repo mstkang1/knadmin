@@ -23,15 +23,14 @@ public class MyUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String insertUserId) throws UsernameNotFoundException {
-    AdminDto adminDto = new AdminDto();
-    adminDto.setAdminId(insertUserId);
-        Optional<AdminDto> findOne = adminService.selectAdmin(adminDto);
-        AdminDto loginAdmin = findOne.orElseThrow(() -> new UsernameNotFoundException("없는 회원입니다 ㅠ"));
+
+        Optional<AdminDto> findOne = adminService.selectAdmin(insertUserId);
+        AdminDto adminDto = findOne.orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 관리자입니다."));
 
         return User.builder()
-                .username(loginAdmin.getAdminId())
-                .password(loginAdmin.getAdminPass())
-                /*.roles(member.getRoles())*/
+                .username(adminDto.getAdminId())
+                .password(adminDto.getAdminPass())
+                /*.roles(adminDto.getRoles())*/
                 .roles("ADMIN")
                 .build();
     }

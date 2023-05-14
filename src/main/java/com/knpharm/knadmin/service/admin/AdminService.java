@@ -5,7 +5,7 @@ import com.knpharm.knadmin.dto.AdminDto;
 import java.util.Optional;
 
 public interface AdminService {
-    Optional<AdminDto> selectAdmin(AdminDto adminDto);
+    Optional<AdminDto> selectAdmin(String adminId);
 
     int insertAdmin(AdminDto adminDto) throws Exception;
 
