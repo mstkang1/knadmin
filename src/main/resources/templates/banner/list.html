@@ -38,7 +38,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                at org.thymeleaf.templateparser.markup.AbstractMarkupTemplate
                 <tr th:each="banner : ${bannerList}">
                     <td th:text="${banner.bannerSeq}"></td>
                     <td th:text="${banner.bannerName}"></td>
@@ -47,7 +46,7 @@
                         <a th:href="${banner.bannerMoUrl}" target="_blank"> [[${banner.bannerMoUrl}]]</a>
                     </td>
                     <td>
-                        <a th:href="@{edit/{brandCode}/{bannerSeq}(brandCode=${banner.brandSeq},bannerSeq=${banner.bannerSeq})}" th:text="수정" class="btn btn-secondary btn-sm"></a>
+                        <a th:href="@{../edit/{brandCode}/{bannerSeq}(brandCode=${banner.brandCode},bannerSeq=${banner.bannerSeq})}" th:text="수정" class="btn btn-secondary btn-sm"></a>
                     </td>
                 <!--<tr>
                     <td>1</td>
