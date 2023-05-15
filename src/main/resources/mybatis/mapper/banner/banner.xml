@@ -19,8 +19,8 @@
     <select id="selectBanner" parameterType="int" resultType="BannerDto">
         <![CDATA[
         SELECT
-            *
-        FROM TBL_BANNER
+            A.*, B.BRAND_NAME
+        FROM TBL_BANNER A LEFT OUTER JOIN TBL_BRAND B ON A.BRAND_CODE = B.BRAND_CODE
         WHERE BANNER_SEQ = #{bannerSeq}
         ]]>
     </select>
@@ -41,12 +41,16 @@
         UPDATE TBL_BANNER SET
             BANNER_NAME = #{bannerName},
             BANNER_PC_URL = #{bannerPcUrl},
-            BANNER_PC_ORG_FILE_NAME = #{bannerPcOrgFileName},
-            BANNER_PC_SAVE_FILE_NAME = #{bannerPcSaveFileName},
+            <if test="bannerPcOrgFileName != null">
+                BANNER_PC_ORG_FILE_NAME = #{bannerPcOrgFileName},
+                BANNER_PC_SAVE_FILE_NAME = #{bannerPcSaveFileName},
+            </if>
             BANNER_PC_IS_NEW = #{bannerPcIsNew},
             BANNER_MO_URL = #{bannerMoUrl},
-            BANNER_MO_ORG_FILE_NAME = #{bannerMoOrgFileName},
-            BANNER_MO_SAVE_FILE_NAME = #{bannerMoSaveFileName},
+            <if test="bannerMoOrgFileName != null">
+                BANNER_MO_ORG_FILE_NAME = #{bannerMoOrgFileName},
+                BANNER_MO_SAVE_FILE_NAME = #{bannerMoSaveFileName},
+            </if>
             BANNER_MO_IS_NEW = #{bannerMoIsNew},
             MODDATE = now()
         WHERE BANNER_SEQ = #{bannerSeq}

@@ -2,13 +2,17 @@ package com.knpharm.knadmin.dto;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class PopupDto {
     private int popupSeq;
     private String brandCode;
     private boolean popupIsShow;
-    private String popupStartDate;
-    private String popupEndDate;
+    private Date popupStartDate;
+    private Date popupEndDate;
+    private String popupStrStartDate;
+    private String popupStrEndDate;
     private String popupName;
     private String popupPcUrl;
     private String popupPcOrgFileName;
@@ -17,5 +21,7 @@ public class PopupDto {
     private String popupMoUrl;
     private String popupMoOrgFileName;
     private String popupMoSaveFileName;
-    private boolean babnnerMoIsNew;
+    private boolean popupMoIsNew;
+
+    private String brandName;
 }

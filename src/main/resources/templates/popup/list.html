@@ -18,7 +18,11 @@
 <div class="admin-contents" layout:fragment="content">
     <div class="admin-contents-header">
         <h2>팝업관리</h2>
-        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; 미놀 &gt; 팝업관리 </div>
+        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt;
+            <th:block th:if="${brandCode == 'M'}"> 미놀 </th:block>
+            <th:block th:if="${brandCode == 'P'}"> PM </th:block>
+            <th:block th:if="${brandCode == 'J'}"> 자하 </th:block>
+            &gt; 팝업관리 </div>
     </div>
     <div class="table-responsive">
         <form action="minol-banner-edit.html">
@@ -44,14 +48,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr th:each="popup : ${popupList}">
                     <td>1</td>
-                    <td>1번 팝업</td>
-                    <td>null</td>
-                    <td>2023-03-25 12:00</td>
-                    <td>2023-04-01 23:30</td>
-                    <td>사용</td>
-                    <td><a href="minol-popup-edit.html" class="btn btn-secondary btn-sm">수정</a></td>
+                    <td th:text="${popup.popupName}"></td>
+                    <td>
+                        <a th:href="${popup.popupPcUrl}" target="_blank"> [[${popup.popupPcUrl}]]</a><br/>
+                        <a th:href="${popup.popupMoUrl}" target="_blank"> [[${popup.popupMoUrl}]]</a>
+                    </td>
+
+                    <td>[[${#dates.format(popup.popupStartDate, 'yyyy-MM-dd HH:mm')}]]</td>
+                    <td>[[${#dates.format(popup.popupEndDate, 'yyyy-MM-dd HH:mm')}]]</td>
+                    <td th:text="${popup.popupIsShow} ? '사용' : '미사용'"></td>
+                    <td>
+                        <a th:href="@{../edit/{brandCode}/{popupSeq}(brandCode=${popup.brandCode},popupSeq=${popup.popupSeq})}" th:text="수정" class="btn btn-secondary btn-sm"></a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

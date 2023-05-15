@@ -15,12 +15,12 @@ public class PopupServiceImpl implements PopupService {
     private PopupMapper popupMapper;
 
     @Override
-    public List<PopupDto> selecPopupList(String brandCode) throws Exception {
+    public List<PopupDto> selectPopupList(String brandCode) throws Exception {
         return popupMapper.selectPopupList(brandCode);
     }
 
     @Override
-    public PopupDto selecPopup(int popupSeq) throws Exception {
+    public PopupDto selectPopup(int popupSeq) throws Exception {
         return popupMapper.selectPopup(popupSeq);
     }
 

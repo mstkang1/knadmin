@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface PopupService {
 
-    List<PopupDto> selecPopupList(String brandCode) throws Exception;
+    List<PopupDto> selectPopupList(String brandCode) throws Exception;
 
-    PopupDto selecPopup(int popupSeq) throws Exception;
+    PopupDto selectPopup(int popupSeq) throws Exception;
 
     int insertPopup(PopupDto popupDto) throws Exception;
 

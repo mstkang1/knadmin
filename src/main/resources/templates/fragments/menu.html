@@ -5,25 +5,25 @@
     <ul>
         <li>
             <button><i class="bi bi-list"></i>미놀</button>
-            <ul>
-                <li><a href="/banner/list/M"><i class="bi bi-image"></i>배너관리</a></li>
-                <li><a href="/popup/list/M"><i class="bi bi-window-x"></i>팝업관리</a></li>
-                <li><a href="/product/list/M"><i class="bi bi-card-text"></i>제품설명</a></li>
+            <ul th:style="${brandCode == 'M' ? 'display:block' : 'display:none'}" >
+                <li th:class="${menuCode == 'banner' ? 'active' : ''}"><a href="/banner/list/M"><i class="bi bi-image"></i>배너관리</a></li>
+                <li th:class="${menuCode == 'popup' ? 'active' : ''}"><a href="/popup/list/M"><i class="bi bi-window-x"></i>팝업관리</a></li>
+                <li th:class="${menuCode == 'product' ? 'active' : ''}"><a href="/product/list/M"><i class="bi bi-card-text"></i>제품설명</a></li>
             </ul>
         </li>
         <li>
             <button><i class="bi bi-list"></i>PM</button>
-            <ul>
-                <li><a href="/banner/list/P"><i class="bi bi-image"></i>배너관리</a></li>
-                <li><a href="/popup/list/P"><i class="bi bi-window-x"></i>팝업관리</a></li>
-                <li><a href="/product/list/P"><i class="bi bi-card-text"></i>제품설명</a></li>
+            <ul th:style="${brandCode == 'P' ? 'display:block' : 'display:none'}" >
+                <li th:class="${menuCode == 'banner' ? 'active' : ''}"><a href="/banner/list/P"><i class="bi bi-image"></i>배너관리</a></li>
+                <li th:class="${menuCode == 'popup' ? 'active' : ''}"><a href="/popup/list/P"><i class="bi bi-window-x"></i>팝업관리</a></li>
+                <li th:class="${menuCode == 'product' ? 'active' : ''}"><a href="/product/list/P"><i class="bi bi-card-text"></i>제품설명</a></li>
             </ul>
         </li>
         <li>
             <button><i class="bi bi-list"></i></i>자하생력</button>
-            <ul>
-                <li><a href="/popup/list/J"><i class="bi bi-window-x"></i>팝업관리</a></li>
-                <li><a href="/product/list/J"><i class="bi bi-card-text"></i>제품설명</a></li>
+            <ul th:style="${brandCode == 'J' ? 'display:block' : 'display:none'}" >
+                <li th:class="${menuCode == 'popup' ? 'active' : ''}"><a href="/popup/list/J"><i class="bi bi-window-x"></i>팝업관리</a></li>
+                <li th:class="${menuCode == 'product' ? 'active' : ''}"><a href="/product/list/J"><i class="bi bi-card-text"></i>제품설명</a></li>
             </ul>
         </li>
         <li>

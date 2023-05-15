@@ -16,4 +16,6 @@ public class BannerDto {
     private String bannerMoOrgFileName;
     private String bannerMoSaveFileName;
     private boolean bannerMoIsNew;
+
+    private String brandName;
 }

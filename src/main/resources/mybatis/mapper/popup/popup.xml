@@ -11,15 +11,15 @@
         SELECT
             *
         FROM TBL_POPUP
-        WHERE BRAND_CDDE = #{brandCode}
+        WHERE BRAND_CODE = #{brandCode}
         ]]>
     </select>
 
     <select id="selectPopup" parameterType="int" resultType="PopupDto">
         <![CDATA[
         SELECT
-            *
-        FROM TBL_POPUP
+            A.*, B.BRAND_NAME
+        FROM TBL_POPUP A LEFT OUTER JOIN TBL_BRAND B ON A.BRAND_CODE = B.BRAND_CODE
         WHERE POPUP_SEQ = #{popupSeq}
         ]]>
     </select>
@@ -38,17 +38,21 @@
 
     <update id="updatePopup" parameterType="PopupDto">
         UPDATE TBL_POPUP SET
-            POPUP_IS_SHOW = #{popupIsNew},
-            POPUP_START_DATE = #{popupStartDate},
-            POPUP_END_DATE = #{popupEndDate},
+            POPUP_IS_SHOW = #{popupIsShow},
+            POPUP_START_DATE = #{popupStartDate, jdbcType=TIMESTAMP},
+            POPUP_END_DATE = #{popupEndDate,jdbcType=TIMESTAMP},
             POPUP_NAME = #{popupName},
             POPUP_PC_URL = #{popupPcUrl},
-            POPUP_PC_ORG_FILE_NAME = #{popupPcOrgFileName},
-            POPUP_PC_SAVE_FILE_NAME = #{popupPcSaveFileName},
+            <if test="popupPcOrgFileName != null">
+                POPUP_PC_ORG_FILE_NAME = #{popupPcOrgFileName},
+                POPUP_PC_SAVE_FILE_NAME = #{popupPcSaveFileName},
+            </if>
             POPUP_PC_IS_NEW = #{popupPcIsNew},
             POPUP_MO_URL = #{popupMoUrl},
-            POPUP_MO_ORG_FILE_NAME = #{popupMoOrgFileName},
-            POPUP_MO_SAVE_FILE_NAME = #{popupMoSaveFileName},
+            <if test="popupMoOrgFileName != null">
+                POPUP_MO_ORG_FILE_NAME = #{popupMoOrgFileName},
+                POPUP_MO_SAVE_FILE_NAME = #{popupMoSaveFileName},
+            </if>
             POPUP_MO_IS_NEW = #{popupMoIsNew},
             MODDATE = now()
         WHERE POPUP_SEQ = #{popupSeq}

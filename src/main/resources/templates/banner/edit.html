@@ -18,96 +18,140 @@
 <div class="admin-contents" layout:fragment="content">
     <div class="admin-contents-header">
         <h2>배너관리</h2>
-        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; 미놀 &gt; 배너관리 </div>
+        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; [[${banner.brandName}]] &gt; 배너관리</div>
     </div>
     <div class="table-responsive">
-        <table class="table table-edit">
-            <colgroup>
-                <col width="10%" />
-                <col width="8%" />
-                <col width="45%" />
-                <col width="37%" />
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="col">번호</th>
-                <td colspan="3">1</td>
-            </tr>
-            <tr>
-                <th scope="col">제목</th>
-                <td colspan="3">
-                    <div class="mt-3 mb-2 col-md-9">
-                        <input class="form-control" type="text" placeholder="제목을 입력하세요">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="col" rowspan="4">이미지</th>
-                <td class="align-center">PC</td>
-                <td colspan="2">
-                    <div class="mb-3 col-md-8">
-                        <label for="formFile" class="form-label"></label>
-                        <input class="form-control" type="file" id="formFile">
-                    </div>
-                    <div class="attention">
-                        <dl>
-                            <dt class="red"><i class="bi bi-exclamation-circle"></i> 이미지 파일 업로드 유의사항</dt>
-                            <dd>- 이미지 규격 : 000px x 000px</dd>
-                            <dd>- 등록가능 파일 : 2MB 이하 jpg, png 파일</dd>
-                        </dl>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-center">링크</td>
-                <td>
-                    <div class="mt-2 mb-2">
-                        <input class="form-control col-md-8" type="text" placeholder="http://">
-                    </div>
-                </td>
-                <td>
-                    <div class="form-check form-check-inline col-sm-10 mt-3 mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">새 창 열림</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-center">모바일</td>
-                <td colspan="2">
-                    <div class="mb-3 col-md-8">
-                        <label for="formFile" class="form-label"></label>
-                        <input class="form-control" type="file" id="formFile">
-                    </div>
-                    <div class="attention">
-                        <dl>
-                            <dt class="red"><i class="bi bi-exclamation-circle"></i> 이미지 파일 업로드 유의사항</dt>
-                            <dd>- 이미지 규격 : 000px x 000px</dd>
-                            <dd>- 등록가능 파일 : 2MB 이하 jpg, png 파일</dd>
-                        </dl>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-center">링크</td>
-                <td>
-                    <div class="mt-2 mb-2">
-                        <input class="form-control col-md-7" type="text" placeholder="http://">
-                    </div>
-                </td>
-                <td>
-                    <div class="form-check form-check-inline col-sm-10 mt-3 mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">새 창 열림</label>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="d-md-flex justify-content-md-end">
-            <a href="javascript:confirm('배너 등록을 취소하시겠습니까?');" class="btn btn-secondary me-md-2" type="button">취소</a>
-            <a href="javascript:confirm('등록을 완료 하시겠습니까?');" class="btn btn-primary" type="button">등록</a>
-        </div>
+        <form id="editFrm" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="bannerSeq" th:value="${banner.bannerSeq}">
+            <table class="table table-edit">
+                <colgroup>
+                    <col width="10%" />
+                    <col width="8%" />
+                    <col width="45%" />
+                    <col width="37%" />
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="col">번호</th>
+                    <td colspan="3" th:text="${banner.bannerOrder}"></td>
+                </tr>
+                <tr>
+                    <th scope="col">제목</th>
+                    <td colspan="3">
+                        <div class="mt-3 mb-2 col-md-9">
+                            <input class="form-control" type="text" placeholder="제목을 입력하세요" name="bannerName" id="bannerName" maxlength="50"  th:value="${banner.bannerName}">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" rowspan="4">이미지</th>
+                    <td class="align-center">PC</td>
+                    <td colspan="2">
+                        <div class="mb-3 col-md-8">
+                            <label for="bannerPcFile" class="form-label"></label>
+                            <input class="form-control" type="file" id="bannerPcFile" name="bannerFile">
+                        </div>
+                        <div class="attention">
+                            <dl>
+                                <dt class="red"><i class="bi bi-exclamation-circle"></i> 이미지 파일 업로드 유의사항</dt>
+                                <dd>- 이미지 규격 : 000px x 000px</dd>
+                                <dd>- 등록가능 파일 : 2MB 이하 jpg, png 파일</dd>
+                            </dl>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-center">링크</td>
+                    <td>
+                        <div class="mt-2 mb-2">
+                            <input class="form-control col-md-8" type="text" name="bannerPcUrl" maxlength="1000" placeholder="http://" th:value="${banner.bannerPcUrl}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check form-check-inline col-sm-10 mt-3 mb-2">
+                            <input class="form-check-input" type="checkbox" value="1" name="bannerPcIsNew" id="bannerPcIsNew" th:checked="${banner.bannerPcIsNew}">
+                            <label class="form-check-label" for="bannerPcIsNew">새 창 열림</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-center">모바일</td>
+                    <td colspan="2">
+                        <div class="mb-3 col-md-8">
+                            <label for="bannerMoFile" class="form-label"></label>
+                            <input class="form-control" type="file"  id="bannerMoFile" name="bannerFile">
+                        </div>
+                        <div class="attention">
+                            <dl>
+                                <dt class="red"><i class="bi bi-exclamation-circle"></i> 이미지 파일 업로드 유의사항</dt>
+                                <dd>- 이미지 규격 : 000px x 000px</dd>
+                                <dd>- 등록가능 파일 : 2MB 이하 jpg, png 파일</dd>
+                            </dl>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-center">링크</td>
+                    <td>
+                        <div class="mt-2 mb-2">
+                            <input class="form-control col-md-7" type="text" name="bannerMoUrl" maxlength="1000" placeholder="http://" th:value="${banner.bannerMoUrl}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check form-check-inline col-sm-10 mt-3 mb-2">
+                            <input class="form-check-input" type="checkbox" value="1" name="bannerMoIsNew" id="bannerMoIsNew" th:checked="${banner.bannerMoIsNew}">
+                            <label class="form-check-label" for="bannerMoIsNew">새 창 열림</label>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-md-flex justify-content-md-end">
+                <a href="javascript:void(0);" id="btnCancel" class="btn btn-secondary me-md-2" type="button">취소</a>
+                <a href="javascript:void(0);" id="btnEdit" class="btn btn-primary" type="button">등록</a>
+            </div>
+        </form>
     </div>
 </div>
 </html>
+<script th:inline="javascript">
+    $("#btnCancel").click(function() {
+        if(confirm('배너 등록을 취소하시겠습니까?')){
+            location.reload();
+        }
+    });
+
+    $("#btnEdit").click(function() {
+        if(confirm('등록을 완료 하시겠습니까?')){
+            if($("#bannerName").val() == "") {
+                alert("베너 제목을 입력하세요.");
+            } else {
+                var form = $('#editFrm')[0];
+                var data = new FormData(form);
+
+                $.ajax({
+                    type: 'POST',
+                    enctype: 'multipart/form-data',
+                    url: '/banner/modify',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        if(data.result == "success"){
+                            alert("정상적으로 수정되었습니다.");
+                            location.href= "/" + [[${menuCode}]] +  "/list/" + [[${brandCode}]];
+                        } else {
+                            alert(data.maeeage);
+                        }
+                    },
+                    error: function (e) {
+                        alert(e.responseText);
+                        //console.log('ERROR : ', e);
+                    }
+                });
+            }
+        }
+    });
+</script>

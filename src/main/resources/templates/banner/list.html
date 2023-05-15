@@ -18,7 +18,11 @@
 <div class="admin-contents" layout:fragment="content">
     <div class="admin-contents-header">
         <h2>배너관리</h2>
-        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; 미놀 &gt; 배너관리 </div>
+        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt;
+            <th:block th:if="${brandCode == 'M'}"> 미놀 </th:block>
+            <th:block th:if="${brandCode == 'P'}"> PM </th:block>
+            <th:block th:if="${brandCode == 'J'}"> 자하 </th:block>
+            &gt; 배너관리 </div>
     </div>
     <div class="table-responsive">
         <form action="minol-banner-edit.html">
@@ -39,7 +43,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="banner : ${bannerList}">
-                    <td th:text="${banner.bannerSeq}"></td>
+                    <td th:text="${banner.bannerOrder}"></td>
                     <td th:text="${banner.bannerName}"></td>
                     <td>
                         <a th:href="${banner.bannerPcUrl}" target="_blank"> [[${banner.bannerPcUrl}]]</a><br/>

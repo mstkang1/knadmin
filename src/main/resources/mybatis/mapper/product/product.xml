@@ -19,8 +19,8 @@
     <select id="selectProduct" parameterType="int" resultType="ProductDto">
         <![CDATA[
         SELECT
-            *
-        FROM TBL_PRODUCT
+            A.*, B.BRAND_NAME
+        FROM TBL_PRODUCT A LEFT OUTER JOIN TBL_BRAND B ON A.BRAND_CODE = B.BRAND_CODE
         WHERE PRODUCT_SEQ = #{productSeq}
         ]]>
     </select>

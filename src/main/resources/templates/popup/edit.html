@@ -13,129 +13,175 @@
 <th:block layout:fragment="script">
     <!--    <script th:src="@{/js/page/home.js}"></script>-->
 </th:block>
-
 <!-- 컨텐츠 영역 -->
 <div class="admin-contents" layout:fragment="content">
     <div class="admin-contents-header">
         <h2>팝업관리</h2>
-        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; 미놀 &gt; 팝업관리 </div>
+        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; [[${popup.brandName}]] &gt; 팝업관리 </div>
     </div>
     <div class="table-responsive">
-        <table class="table table-edit">
-            <colgroup>
-                <col width="10%" />
-                <col width="8%" />
-                <col width="45%" />
-                <col width="37%" />
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="col">노출여부</th>
-                <td colspan="3">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
-                        <label class="form-check-label" for="inlineRadio1">노출</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                        <label class="form-check-label" for="inlineRadio2">미노출</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="col">제목</th>
-                <td colspan="3">
-                    <div class="mt-3 mb-2 col-md-9">
-                        <input class="form-control" type="text" placeholder="제목을 입력하세요">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="col">기간</th>
-                <td colspan="3">
-                    <div class="datepicker-wrap">
-                        <div class="row col-md-4 me-1">
-                            <label for="start" class="mb-2 form-label">시작일</label>
-                            <div class="col-sm-15">
-                                <input type="datetime-local" id="start" name="start" value="2023-03-25T00:00" class="form-control">
+        <form id="editFrm" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="popupSeq" th:value="${popup.popupSeq}">
+            <table class="table table-edit">
+                <colgroup>
+                    <col width="10%" />
+                    <col width="8%" />
+                    <col width="45%" />
+                    <col width="37%" />
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="col">노출여부</th>
+                    <td colspan="3">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="1" name="popupIsShow" id="popupIsShowT" th:checked="${popup.popupIsShow}">
+                            <label class="form-check-label" for="popupIsShowT">노출</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" value="0" name="popupIsShow" id="popupIsShowF" th:checked="${!popup.popupIsShow}">
+                            <label class="form-check-label" for="popupIsShowF">미노출</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">제목</th>
+                    <td colspan="3">
+                        <div class="mt-3 mb-2 col-md-9">
+                            <input class="form-control" type="text" placeholder="제목을 입력하세요" name="popupName" id="popupName" maxlength="50" th:value="${popup.popupName}">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">기간</th>
+                    <td colspan="3">
+                        <div class="datepicker-wrap">
+                            <div class="row col-md-4 me-1">
+                                <label for="popupStrStartDate" class="mb-2 form-label">시작일</label>
+                                <div class="col-sm-15">
+                                    <input type="datetime-local" name="popupStrStartDate" id="popupStrStartDate" th:value="${#dates.format(popup.popupStartDate, 'yyyy-MM-dd HH:mm')}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row col-md-4">
+                                <label for="popupStrEndDate" class="mb-2 form-label">종료일</label>
+                                <div class="col-sm-15">
+                                    <input type="datetime-local"  name="popupStrEndDate" id="popupStrEndDate" th:value="${#dates.format(popup.popupEndDate, 'yyyy-MM-dd HH:mm')}" class="form-control">
+                                </div>
                             </div>
                         </div>
-                        <div class="row col-md-4">
-                            <label for="end" class="mb-2 form-label">종료일</label>
-                            <div class="col-sm-15">
-                                <input type="datetime-local" id="end" name="end" value="2023-04-25T00:00" class="form-control">
-                            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col" rowspan="4">이미지</th>
+                    <td class="align-center">PC</td>
+                    <td colspan="2">
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control"  aria-describedby="inputGroupFileAddon04" aria-label="Upload" id="popupPcFile" name="popupFile">
+                            <button class="btn btn-secondary" type="button" id="popupPcFileDown">다운로드</button>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="col" rowspan="4">이미지</th>
-                <td class="align-center">PC</td>
-                <td colspan="2">
-                    <div class="input-group mb-3">
-                        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                        <button class="btn btn-secondary" type="button" id="inputGroupFileAddon04">다운로드</button>
-                    </div>
-                    <div class="attention">
-                        <dl>
-                            <dt class="red"><i class="bi bi-exclamation-circle"></i> 이미지 파일 업로드 유의사항</dt>
-                            <dd>- 이미지 규격 : 000px x 000px</dd>
-                            <dd>- 등록가능 파일 : 2MB 이하 jpg, png 파일</dd>
-                        </dl>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-center">링크</td>
-                <td>
-                    <div class="mt-2 mb-2">
-                        <input class="form-control col-md-8" type="text" placeholder="http://">
-                    </div>
-                </td>
-                <td>
-                    <div class="form-check form-check-inline col-sm-10 mt-3 mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">새 창 열림</label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-center">모바일</td>
-                <td colspan="2">
-                    <div class="input-group mb-3">
-                        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                        <button class="btn btn-secondary" type="button" id="inputGroupFileAddon04">다운로드</button>
-                    </div>
-                    <div class="attention">
-                        <dl>
-                            <dt class="red"><i class="bi bi-exclamation-circle"></i> 이미지 파일 업로드 유의사항</dt>
-                            <dd>- 이미지 규격 : 000px x 000px</dd>
-                            <dd>- 등록가능 파일 : 2MB 이하 jpg, png 파일</dd>
-                        </dl>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-center">링크</td>
-                <td>
-                    <div class="mt-2 mb-2">
-                        <input class="form-control col-md-8" type="text" placeholder="http://">
-                    </div>
-                </td>
-                <td>
-                    <div class="form-check form-check-inline col-sm-10 mt-3 mb-2">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">새 창 열림</label>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="d-md-flex justify-content-md-end">
-            <a href="javascript:confirm('팝업 등록을 취소하시겠습니까?');" class="btn btn-secondary me-md-2" type="button">취소</a>
-            <a href="javascript:confirm('등록을 완료 하시겠습니까?');" class="btn btn-primary" type="button">등록</a>
-        </div>
+                        <div class="attention">
+                            <dl>
+                                <dt class="red"><i class="bi bi-exclamation-circle"></i> 이미지 파일 업로드 유의사항</dt>
+                                <dd>- 이미지 규격 : 000px x 000px</dd>
+                                <dd>- 등록가능 파일 : 2MB 이하 jpg, png 파일</dd>
+                            </dl>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-center">링크</td>
+                    <td>
+                        <div class="mt-2 mb-2">
+                            <input class="form-control col-md-8" type="text"  name="popupPcUrl" id="popupPcUrl" maxlength="1000" placeholder="http://" th:value="${popup.popupPcUrl}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check form-check-inline col-sm-10 mt-3 mb-2">
+                            <input class="form-check-input" type="checkbox" value="1" id="popupPcIsNew" th:checked="${popup.popupPcIsNew}">
+                            <label class="form-check-label" for="popupPcIsNew">새 창 열림</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-center">모바일</td>
+                    <td colspan="2">
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" aria-describedby="inputGroupFileAddon04" id="popupMoFile" name="popupFile">
+                            <button class="btn btn-secondary" type="button" id="popupMoFileDown">다운로드</button>
+                        </div>
+                        <div class="attention">
+                            <dl>
+                                <dt class="red"><i class="bi bi-exclamation-circle"></i> 이미지 파일 업로드 유의사항</dt>
+                                <dd>- 이미지 규격 : 000px x 000px</dd>
+                                <dd>- 등록가능 파일 : 2MB 이하 jpg, png 파일</dd>
+                            </dl>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="align-center">링크</td>
+                    <td>
+                        <div class="mt-2 mb-2">
+                            <input class="form-control col-md-8" type="text" id="popupMoUrl" name="popupMoUrl" placeholder="http://" th:value="${popup.popupMoUrl}">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-check form-check-inline col-sm-10 mt-3 mb-2">
+                            <input class="form-check-input" type="checkbox"  value="1" id="popupMoIsNew" th:checked="${popup.popupMoIsNew}">
+                            <label class="form-check-label" for="popupMoIsNew">새 창 열림</label>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-md-flex justify-content-md-end">
+                <a href="javascript:void(0);" id="btnCancel" class="btn btn-secondary me-md-2" type="button">취소</a>
+                <a href="javascript:void(0);" id="btnEdit" class="btn btn-primary" type="button">등록</a>
+            </div>
+        </form>
     </div>
 </div>
 </html>
+<script th:inline="javascript">
+    $("#btnCancel").click(function() {
+        if(confirm('배너 등록을 취소하시겠습니까?')){
+            location.reload();
+        }
+    });
+
+    $("#btnEdit").click(function() {
+        if(confirm('등록을 완료 하시겠습니까?')){
+            if($("#popupName").val() == "") {
+                alert("팝업 제목을 입력하세요.");
+            } else {
+                var form = $('#editFrm')[0];
+                var data = new FormData(form);
+
+                $.ajax({
+                    type: 'POST',
+                    enctype: 'multipart/form-data',
+                    url: '/popup/modify',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        if(data.result == "success"){
+                            alert("정상적으로 수정되었습니다.");
+                            location.href= "/" + [[${menuCode}]] +  "/list/" + [[${brandCode}]];
+                        } else {
+                            alert(data.maeeage);
+                        }
+                        /*console.log('SUCCESS : ', data);*/
+
+                    },
+                    error: function (e) {
+                        alert(e.responseText);
+                        //console.log('ERROR : ', e);
+                    }
+                });
+            }
+        }
+    });
+</script>
+
