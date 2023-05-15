@@ -76,7 +76,7 @@
                     <td colspan="2">
                         <div class="input-group mb-3">
                             <input type="file" class="form-control"  aria-describedby="inputGroupFileAddon04" aria-label="Upload" id="popupPcFile" name="popupFile">
-                            <button class="btn btn-secondary" type="button" id="popupPcFileDown">다운로드</button>
+                            <button class="btn btn-secondary" type="button" onclick="fileDown('Pc');">다운로드</button>
                         </div>
                         <div class="attention">
                             <dl>
@@ -106,7 +106,7 @@
                     <td colspan="2">
                         <div class="input-group mb-3">
                             <input type="file" class="form-control" aria-describedby="inputGroupFileAddon04" id="popupMoFile" name="popupFile">
-                            <button class="btn btn-secondary" type="button" id="popupMoFileDown">다운로드</button>
+                            <button class="btn btn-secondary" type="button" onclick="fileDown('Mo');">다운로드</button>
                         </div>
                         <div class="attention">
                             <dl>
@@ -183,5 +183,10 @@
             }
         }
     });
+
+    function fileDown(flag) {
+        window.location.href="/download/" + flag + [[${bannerSeq}]];
+
+    }
 </script>
 

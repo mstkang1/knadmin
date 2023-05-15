@@ -9,7 +9,7 @@ import java.util.List;
 public interface ProductMapper {
     List<ProductDto> selectProductList(String brandCode) throws Exception;
 
-    ProductDto selectProduct(int productSeq) throws Exception;
+    ProductDto selectProduct(String productName) throws Exception;
 
     int updateProduct(ProductDto productDto) throws Exception;
 }

@@ -16,21 +16,21 @@
         ]]>
     </select>
 
-    <select id="selectProduct" parameterType="int" resultType="ProductDto">
+    <select id="selectProduct" parameterType="String" resultType="ProductDto">
         <![CDATA[
         SELECT
             A.*, B.BRAND_NAME
         FROM TBL_PRODUCT A LEFT OUTER JOIN TBL_BRAND B ON A.BRAND_CODE = B.BRAND_CODE
-        WHERE PRODUCT_SEQ = #{productSeq}
+        WHERE PRODUCT_NAME = #{productName}
         ]]>
     </select>
 
     <update id="updateProduct" parameterType="ProductDto">
-        UPDATE TBL_POPUP SET
-            PRODUCT_ORG_FILE_NAME = #{popupPcOrgFileName},
-            PRODUCT_PC_SAVE_FILE_NAME = #{popupPcSaveFileName},
+        UPDATE TBL_PRODUCT SET
+            PRODUCT_ORG_FILE_NAME = #{productOrgFileName},
+            PRODUCT_SAVE_FILE_NAME = #{productSaveFileName},
             MODDATE = now()
-        WHERE PRODUCT_SEQ = #{productSeq}
+        WHERE PRODUCT_NAME = #{productName}
     </update>
 
 </mapper>

@@ -18,8 +18,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto selectProduct(int productSeq) throws Exception {
-        return productMapper.selectProduct(productSeq);
+    public ProductDto selectProduct(String productName) throws Exception {
+        return productMapper.selectProduct(productName);
     }
 
     @Override

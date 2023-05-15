@@ -41,7 +41,7 @@ public class PopupController {
     }
 
     @RequestMapping(value = "/edit/{brandCode}/{popupSeq}")
-    public  String modify(@PathVariable("brandCode") String brandCode, @PathVariable("popupSeq") int popupSeq, Model model) throws Exception {
+    public  String edit(@PathVariable("brandCode") String brandCode, @PathVariable("popupSeq") int popupSeq, Model model) throws Exception {
 
         PopupDto popup = popupService.selectPopup(popupSeq);
 
