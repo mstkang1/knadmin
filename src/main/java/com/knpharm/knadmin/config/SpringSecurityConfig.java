@@ -22,7 +22,7 @@ public class SpringSecurityConfig {
         http.csrf().disable().cors().disable()
                 .authorizeHttpRequests(request -> request
                         .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                        .requestMatchers("/images/**", "/css/**", "/js/**", "/join", "/auth/join").permitAll()
+                        .requestMatchers("/images/**", "/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated()	// 어떠한 요청이라도 인증필요
                 )
                 .formLogin(login -> login	// form 방식 로그인 사용

@@ -21,6 +21,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public AdminDto selectAdminById(String adminId) throws UsernameNotFoundException {
+        return adminMapper.selectAdminById(adminId);
+    }
+
+    @Override
     public int insertAdmin(AdminDto adminDto) throws Exception {
         return adminMapper.insertAdmin(adminDto);
     }

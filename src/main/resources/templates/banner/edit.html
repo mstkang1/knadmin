@@ -47,9 +47,11 @@
                     <th scope="col" rowspan="4">이미지</th>
                     <td class="align-center">PC</td>
                     <td colspan="2">
-                        <div class="mb-3 col-md-8">
+                        <div class="input-group mb-3">
                             <label for="bannerPcFile" class="form-label"></label>
                             <input class="form-control" type="file" id="bannerPcFile" name="bannerFile">
+                            <button class="btn btn-secondary" type="button" onclick="fileDown('P');">다운로드</button>
+
                         </div>
                         <div class="attention">
                             <dl>
@@ -77,9 +79,10 @@
                 <tr>
                     <td class="align-center">모바일</td>
                     <td colspan="2">
-                        <div class="mb-3 col-md-8">
+                        <div class="input-group mb-3">
                             <label for="bannerMoFile" class="form-label"></label>
                             <input class="form-control" type="file"  id="bannerMoFile" name="bannerFile">
+                            <button class="btn btn-secondary" type="button" onclick="fileDown('M');">다운로드</button>
                         </div>
                         <div class="attention">
                             <dl>
@@ -143,15 +146,19 @@
                             alert("정상적으로 수정되었습니다.");
                             location.href= "/" + [[${menuCode}]] +  "/list/" + [[${brandCode}]];
                         } else {
-                            alert(data.maeeage);
+                            alert(data.message);
                         }
                     },
                     error: function (e) {
                         alert(e.responseText);
-                        //console.log('ERROR : ', e);
+                        //console.log('ERROR : ', e);0
                     }
                 });
             }
         }
     });
+    function fileDown(flag) {
+        window.location.href="/banner/download/" + flag + "/" + [[${bannerSeq}]];
+    }
+
 </script>

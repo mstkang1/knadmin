@@ -42,6 +42,7 @@
                     <td>
                         <div class="input-group mb-3">
                             <input type="file" class="form-control" aria-describedby="inputGroupFileAddon04" aria-label="Upload"  id="productFile"  name="productFile">
+                            <button class="btn btn-secondary" type="button" onclick="fileDown();">다운로드</button>
                             <!--<a href="javascript:confirm('파일을 삭제하시겠습니까?')" class="btn btn-danger" type="button" id="inputGroupFileAddon04">삭제</a>-->
                         </div>
                         <div class="attention">
@@ -89,7 +90,7 @@
                         alert("정상적으로 수정되었습니다.");
                         location.href= "/" + [[${menuCode}]] +  "/list/" + [[${brandCode}]];
                     } else {
-                        alert(data.maeeage);
+                        alert(data.message);
                     }
                 },
                 error: function (e) {
@@ -99,4 +100,8 @@
             });
         }
     });
+
+    function fileDown() {
+        window.location.href="/product/download/"  + [[${product.productName}]];
+    }
 </script>

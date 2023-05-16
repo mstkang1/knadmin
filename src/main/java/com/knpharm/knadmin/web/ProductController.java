@@ -3,15 +3,20 @@ package com.knpharm.knadmin.web;
 import com.knpharm.knadmin.dto.PopupDto;
 import com.knpharm.knadmin.dto.ProductDto;
 import com.knpharm.knadmin.service.product.ProductService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +33,9 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Value("${spring.servlet.multipart.location}")
+    private String uploadPath;
+
     @RequestMapping(value = "/list/{brandCode}")
     public  String list(@PathVariable("brandCode") String brandCode, Model model) throws Exception {
 
@@ -38,7 +46,7 @@ public class ProductController {
 
         model.addAttribute("productList", productList);
 
-        return "/product/list";
+        return "product/list";
     }
 
     @RequestMapping(value = "/edit/{brandCode}/{productName}")
@@ -51,7 +59,7 @@ public class ProductController {
         model.addAttribute("productName", productName);
         model.addAttribute("product", product);
 
-        return "/product/edit";
+        return "product/edit";
     }
 
     @ResponseBody
@@ -79,6 +87,15 @@ public class ProductController {
 
                 product.setProductOrgFileName(originName);
                 product.setProductSaveFileName(random);
+
+                if(!(exten.equalsIgnoreCase(".jpg") || exten.equalsIgnoreCase(".jpeg") || exten.equalsIgnoreCase(".gif") ||
+                        exten.equalsIgnoreCase(".png") || exten.equalsIgnoreCase(".bmp") ||
+                        exten.equalsIgnoreCase(".pdf") || exten.equalsIgnoreCase(".zip") || exten.equalsIgnoreCase(".docx") ||
+                        exten.equalsIgnoreCase(".doc"))) {
+                    rtnObj.put("result", "fail");
+                    rtnObj.put("message", "잘못된 형식의 파일입니다.(jpg, jpeg, gif, png, bmp, pdf, zip, doc, docx만 가능)");
+                    return rtnObj;
+                }
             }
         }
 
@@ -88,6 +105,43 @@ public class ProductController {
 
         rtnObj.put("result", "success");
         return rtnObj;
+    }
+
+    @RequestMapping("/download/{productName}")
+    public void process(@PathVariable(name = "productName") String productName, HttpServletResponse response) throws Exception {
+        try {
+            // 서비스를 통해 첨부파일 가져오기
+            ProductDto product = productService.selectProduct(productName);
+
+
+            String originalName = "";
+            String filePath = uploadPath + File.separatorChar;
+            String fileName = "";
+
+            // 파일명에 한글이 있는경우 처리
+            originalName = new String(product.getProductOrgFileName().getBytes("utf-8"), "iso-8859-1");
+            fileName = product.getProductSaveFileName();
+
+            String path = filePath + fileName;
+
+            File file = new File(path);
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+
+            //형식을 모르는 파일첨부용 contentType
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment;filename=" + originalName); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+
+
+            //파일복사
+            FileCopyUtils.copy(in, response.getOutputStream());
+            in.close();
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+
+        } catch (Exception e) {
+            throw new Exception("download error");
+
+        }
     }
 
 }

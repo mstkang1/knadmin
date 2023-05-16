@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +28,7 @@ public class BannerController {
     @Autowired
     private BannerService bannerService;
 
-    /*@Value("${spring.multipart.location}")*/
+    @Value("${spring.servlet.multipart.location}")
     private String uploadPath;
 
     @RequestMapping(value = "/list/{brandCode}")
@@ -40,7 +41,7 @@ public class BannerController {
 
         model.addAttribute("bannerList", bannerList);
 
-        return "/banner/list";
+        return "banner/list";
 
     }
 
@@ -54,7 +55,7 @@ public class BannerController {
         model.addAttribute("bannerSeq", bannerSeq);
         model.addAttribute("banner", banner);
 
-        return "/banner/edit";
+        return "banner/edit";
     }
 
 
@@ -82,6 +83,13 @@ public class BannerController {
 
                 banner.setBannerPcOrgFileName(originName);
                 banner.setBannerPcSaveFileName(random);
+
+                if(!(exten.equalsIgnoreCase(".jpg") || exten.equalsIgnoreCase(".jpeg") || exten.equalsIgnoreCase(".gif") ||
+                        exten.equalsIgnoreCase(".png") || exten.equalsIgnoreCase(".bmp"))) {
+                    rtnObj.put("result", "fail");
+                    rtnObj.put("message", "잘못된 형식의 파일입니다.(jpg, jpeg, gif, png, bmp만 가능)");
+                    return rtnObj;
+                }
             }
 
             MultipartFile moFile = files[1];
@@ -96,6 +104,13 @@ public class BannerController {
 
                 banner.setBannerMoOrgFileName(originName);
                 banner.setBannerMoSaveFileName(random);
+
+                if(!(exten.equalsIgnoreCase(".jpg") || exten.equalsIgnoreCase(".jpeg") || exten.equalsIgnoreCase(".gif") ||
+                        exten.equalsIgnoreCase(".png") || exten.equalsIgnoreCase(".bmp"))) {
+                    rtnObj.put("result", "fail");
+                    rtnObj.put("message", "잘못된 형식의 파일입니다.(jpg, jpeg, gif, png, bmp만 가능)");
+                    return rtnObj;
+                }
             }
         }
 
@@ -107,7 +122,6 @@ public class BannerController {
         return rtnObj;
     }
 
-    // @PathVariable 사용하여 url상의 경로를 변수에 할당 "/attach/download/25625"
     @RequestMapping("/download/{pmFlag}/{bannerSeq}")
     public void process(@PathVariable(name = "pmFlag") String pmFlag, @PathVariable(name = "bannerSeq") int bannerSeq, HttpServletResponse response) throws Exception {
         try {
@@ -132,16 +146,19 @@ public class BannerController {
             String path = filePath + fileName;
 
             File file = new File(path);
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+
+            //형식을 모르는 파일첨부용 contentType
+            response.setContentType("application/octet-stream");
             response.setHeader("Content-Disposition", "attachment;filename=" + originalName); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
 
-            FileInputStream fileInputStream = new FileInputStream(path); // 파일 읽어오기
-            OutputStream out = response.getOutputStream();
 
-            int read = 0;
-            byte[] buffer = new byte[1024];
-            while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을 파일이 없음
-                out.write(buffer, 0, read);
-            }
+            //파일복사
+            FileCopyUtils.copy(in, response.getOutputStream());
+            in.close();
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+
         } catch (Exception e) {
             throw new Exception("download error");
 

@@ -76,7 +76,7 @@
                     <td colspan="2">
                         <div class="input-group mb-3">
                             <input type="file" class="form-control"  aria-describedby="inputGroupFileAddon04" aria-label="Upload" id="popupPcFile" name="popupFile">
-                            <button class="btn btn-secondary" type="button" onclick="fileDown('Pc');">다운로드</button>
+                            <button class="btn btn-secondary" type="button" onclick="fileDown('P');">다운로드</button>
                         </div>
                         <div class="attention">
                             <dl>
@@ -106,7 +106,7 @@
                     <td colspan="2">
                         <div class="input-group mb-3">
                             <input type="file" class="form-control" aria-describedby="inputGroupFileAddon04" id="popupMoFile" name="popupFile">
-                            <button class="btn btn-secondary" type="button" onclick="fileDown('Mo');">다운로드</button>
+                            <button class="btn btn-secondary" type="button" onclick="fileDown('M');">다운로드</button>
                         </div>
                         <div class="attention">
                             <dl>
@@ -170,7 +170,7 @@
                             alert("정상적으로 수정되었습니다.");
                             location.href= "/" + [[${menuCode}]] +  "/list/" + [[${brandCode}]];
                         } else {
-                            alert(data.maeeage);
+                            alert(data.message);
                         }
                         /*console.log('SUCCESS : ', data);*/
 
@@ -185,8 +185,7 @@
     });
 
     function fileDown(flag) {
-        window.location.href="/download/" + flag + [[${bannerSeq}]];
-
+        window.location.href="/popup/download/" + flag + "/" + [[${popupSeq}]];
     }
 </script>
 

@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface AdminMapper {
     Optional<AdminDto> selectAdmin(String adminId);
 
+    AdminDto selectAdminById(String adminId);
+
     int insertAdmin(AdminDto adminDto) throws Exception;
 
     int updateAdmin(AdminDto adminDto) throws Exception;

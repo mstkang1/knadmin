@@ -28,8 +28,6 @@ spring:
   servlet:
     multipart:
       location: "C:\\upload"
-
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/knpharm?serverTimezone=Asia/Seoul
@@ -55,7 +53,7 @@ spring:
       location: "/data/upload/dev"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://1.234.23.57:3306/kntest?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/kntest?serverTimezone=Asia/Seoul
     username: kndev
     password: dev@w2w
   devtools:
@@ -67,7 +65,9 @@ spring:
     cache: false # 개발시에는 수정시 즉시 반영 가능하게.
 server:
   port: 8073
-
+  error:
+    include-exception: true
+    include-stacktrace: always
 ---
 spring:
   config:

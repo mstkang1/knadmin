@@ -21,34 +21,34 @@
         <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt; 비밀번호 변경</div>
     </div>
     <div class="password-edit-wrap">
-        <form class="needs-validation" novalidate>
+        <form class="needs-validation" id="passFrm">
             <div class="col-form-label">
-                <label for="validationCustom01" class="form-label">현재 비밀번호</label>
-                <input type="text" class="form-control" id="validationCustom01" required>
-                <div class="invalid-feedback">
+                <label for="nowPass" class="form-label">현재 비밀번호</label>
+                <input type="password" class="form-control" id="nowPass" name="nowPass" maxlength="12" required>
+                <!--<div class="invalid-feedback">
                     현재 비밀번호를 입력해주세요.
-                </div>
+                </div>-->
             </div>
             <div class="col-form-label">
-                <label for="validationCustom02" class="form-label">새 비밀번호</label>
-                <input type="text" class="form-control" id="validationCustom02" required>
-                <div class="invalid-feedback">
+                <label for="newPass" class="form-label">새 비밀번호</label>
+                <input type="password" class="form-control" id="newPass" name="newPass" maxlength="12" required>
+                <!--<div class="invalid-feedback">
                     새 비밀번호를 입력해주세요.
-                </div>
+                </div>-->
             </div>
             <div class="col-form-label mb-2">
-                <label for="validationCustom03" class="form-label">새 비밀번호 확인</label>
-                <input type="text" class="form-control" id="validationCustom03" required>
-                <div class="invalid-feedback">
+                <label for="newPassCheck" class="form-label">새 비밀번호 확인</label>
+                <input type="password" class="form-control" id="newPassCheck" name="newPassCheck" maxlength="12" required>
+                <!--<div class="invalid-feedback">
                     변경할 비밀번호가 다릅니다.
-                </div>
+                </div>-->
             </div>
             <div class="d-md-flex justify-content-md-end">
-                <a href="javascript:confirm('배너 등록을 취소하시겠습니까?');" class="btn btn-secondary me-md-2" type="button">취소</a>
-                <button class="btn btn-primary" type="submit">등록</button>
+                <a href="javascript:void(0);" id="btnCancel" class="btn btn-secondary me-md-2" type="button">취소</a>
+                <a href="javascript:void(0);" id="btnEdit" class="btn btn-primary" type="button">등록</a>
             </div>
         </form>
-        <script>
+        <!--<script>
             // Example starter JavaScript for disabling form submissions if there are invalid fields
             (() => {
                 'use strict'
@@ -68,7 +68,58 @@
                     }, false)
                 })
             })()
-        </script>
+        </script>-->
     </div>
 </div>
 </html>
+<script th:inline="javascript">
+    $("#btnCancel").click(function() {
+        if(confirm('비밀번호 변경을 취소하시겠습니까?')){
+            window.location.href="/index";
+        }
+    });
+
+    $("#btnEdit").click(function() {
+        if($("#nowPass").val() == "") {
+            alert("현재 비밀번호를 입력해 주세요.");
+        } else if($("#newPass").val() == "") {
+            alert("새 비밀번호를 입력해 주세요.");
+        }  else if($("#newPassCheck").val() == "") {
+            alert("새 비밀번호를 다시 한번 입력해 주세요.");
+        }  else if($("#newPass").val() != $("#newPassCheck").val()) {
+            alert("새 비밀번호가 다릅니다. 확인해 주세요.");
+        } else {
+            if(confirm('비밀번호를 변경하시겠습니까?')){
+
+                var form = $('#passFrm')[0];
+                var data = new FormData(form);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/modify',
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        if(data.result == "success"){
+                            alert("정상적으로 수정되었습니다.");
+                            location.href= "/index";
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function (e) {
+                        alert(e.responseText);
+                        //console.log('ERROR : ', e);0
+                    }
+                });
+            }
+        }
+    });
+    function fileDown(flag) {
+        window.location.href="/banner/download/" + flag + "/" + [[${bannerSeq}]];
+    }
+
+</script>

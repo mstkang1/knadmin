@@ -12,4 +12,5 @@ public class AdminDto {
 
     private String adminName;
 
+
 }

@@ -3,15 +3,20 @@ package com.knpharm.knadmin.web;
 import com.knpharm.knadmin.dto.BannerDto;
 import com.knpharm.knadmin.dto.PopupDto;
 import com.knpharm.knadmin.service.Popup.PopupService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +32,9 @@ public class PopupController {
     @Autowired
     private PopupService popupService;
 
+    @Value("${spring.servlet.multipart.location}")
+    private String uploadPath;
+
     @RequestMapping(value = "/list/{brandCode}")
     public  String list(@PathVariable("brandCode") String brandCode, Model model) throws Exception {
 
@@ -37,7 +45,7 @@ public class PopupController {
 
         model.addAttribute("popupList", popupList);
 
-        return "/popup/list";
+        return "popup/list";
     }
 
     @RequestMapping(value = "/edit/{brandCode}/{popupSeq}")
@@ -50,7 +58,7 @@ public class PopupController {
         model.addAttribute("popupSeq", popupSeq);
         model.addAttribute("popup", popup);
 
-        return "/popup/edit";
+        return "popup/edit";
     }
 
     @ResponseBody
@@ -83,6 +91,13 @@ public class PopupController {
 
                 popup.setPopupPcOrgFileName(originName);
                 popup.setPopupPcSaveFileName(random);
+
+                if(!(exten.equalsIgnoreCase(".jpg") || exten.equalsIgnoreCase(".jpeg") || exten.equalsIgnoreCase(".gif") ||
+                        exten.equalsIgnoreCase(".png") || exten.equalsIgnoreCase(".bmp"))) {
+                    rtnObj.put("result", "fail");
+                    rtnObj.put("message", "잘못된 형식의 파일입니다.(jpg, jpeg, gif, png, bmp만 가능)");
+                    return rtnObj;
+                }
             }
 
             MultipartFile moFile = files[1];
@@ -97,6 +112,13 @@ public class PopupController {
 
                 popup.setPopupMoOrgFileName(originName);
                 popup.setPopupMoSaveFileName(random);
+
+                if(!(exten.equalsIgnoreCase(".jpg") || exten.equalsIgnoreCase(".jpeg") || exten.equalsIgnoreCase(".gif") ||
+                        exten.equalsIgnoreCase(".png") || exten.equalsIgnoreCase(".bmp"))) {
+                    rtnObj.put("result", "fail");
+                    rtnObj.put("message", "잘못된 형식의 파일입니다.(jpg, jpeg, gif, png, bmp만 가능)");
+                    return rtnObj;
+                }
             }
         }
 
@@ -106,5 +128,48 @@ public class PopupController {
 
         rtnObj.put("result", "success");
         return rtnObj;
+    }
+
+    @RequestMapping("/download/{pmFlag}/{popupSeq}")
+    public void process(@PathVariable(name = "pmFlag") String pmFlag, @PathVariable(name = "popupSeq") int popupSeq, HttpServletResponse response) throws Exception {
+        try {
+            // 서비스를 통해 첨부파일 가져오기
+            PopupDto popup = popupService.selectPopup(popupSeq);
+
+
+            String originalName = "";
+            String filePath = uploadPath + File.separatorChar;
+            String fileName = "";
+
+            if ("P".equals(pmFlag)) {
+                // 파일명에 한글이 있는경우 처리
+                originalName = new String(popup.getPopupPcOrgFileName().getBytes("utf-8"), "iso-8859-1");
+                fileName = popup.getPopupPcSaveFileName();
+            } else {
+                // 파일명에 한글이 있는경우 처리
+                originalName = new String(popup.getPopupMoOrgFileName().getBytes("utf-8"), "iso-8859-1");
+                fileName = popup.getPopupMoSaveFileName();
+            }
+
+            String path = filePath + fileName;
+
+            File file = new File(path);
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+
+            //형식을 모르는 파일첨부용 contentType
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment;filename=" + originalName); // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+
+
+            //파일복사
+            FileCopyUtils.copy(in, response.getOutputStream());
+            in.close();
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+
+        } catch (Exception e) {
+            throw new Exception("download error");
+
+        }
     }
 }

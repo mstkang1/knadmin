@@ -28,7 +28,7 @@ public class StoreController {
 
     @RequestMapping("/excel")
     public  String store(Model model) {
-        return "/store/excel";
+        return "store/excel";
     }
 
 

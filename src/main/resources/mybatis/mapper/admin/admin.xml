@@ -15,6 +15,15 @@
         ]]>
     </select>
 
+    <select id="selectAdminById" parameterType="String" resultType="AdminDto">
+        <![CDATA[
+        SELECT
+            *
+        FROM TBL_ADMIN
+        WHERE ADMIN_ID = #{adminId}
+        ]]>
+    </select>
+
     <insert id="insertAdmin" parameterType="AdminDto">
         INSERT INTO TBL_ADMIN (ADMIN_ID, ADMIN_PASS, ADMIN_NAME, REGDATE, MODDATE)
         VALUES(#{adminId}, #{adminPass}, #{adminName}, now(), now());
@@ -23,7 +32,7 @@
     <update id="updateAdmin" parameterType="AdminDto">
         UPDATE TBL_ADMIN SET
              ADMIN_PASS = #{adminPass}
-        WHERE ADMIN_SEQ = #{adminSeq};
+        WHERE ADMIN_ID = #{adminId};
     </update>
 
 </mapper>
