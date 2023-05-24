@@ -41,7 +41,7 @@ spring:
   thymeleaf:
     cache: false # 개발시에는 수정시 즉시 반영 가능하게.
 server:
-  port: 80
+  port: 88
 
 ---
 spring:

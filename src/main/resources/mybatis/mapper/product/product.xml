@@ -33,4 +33,10 @@
         WHERE PRODUCT_NAME = #{productName}
     </update>
 
+
+    <!--<insert id="insertProduct" parameterType="ProductDto">
+        INSERT INTO TBL_PRODUCT (PRODUCT_NAME, BRAND_CODE, PRODUCT_ORDER, PRODUCT_ORG_FILE_NAME, PRODUCT_SAVE_FILE_NAME, REGDATE, MODDATE) VALUES
+       (#{productName}, #{brandCode}, (SELECT MAX(PRODUCT_ORDER) + 1 FROM TBL_PRODUCT WHERE BRAND_CODE = #{brandCode}), #{productOrgFileName}, #{productSaveFileName}, now(), now())
+    </insert>-->
+
 </mapper>
