@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default_layout}">
+
+<!-- index.html 고유 CSS 추가 -->
+<th:block layout:fragment="css">
+    <!--    <link rel="stylesheet" th:href="@{/css/page/home.css}" >-->
+</th:block>
+<!-- index.html 고유 스크립트 추가 -->
+<th:block layout:fragment="script">
+    <!--    <script th:src="@{/js/page/home.js}"></script>-->
+</th:block>
+
+<!-- 컨텐츠 영역 -->
+<div class="admin-contents" layout:fragment="content">
+    <div class="admin-contents-header">
+        <h2>제품설명</h2>
+        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt;  [[${product.brandName}]] &gt; 제품설명 </div>
+    </div>
+    <div class="table-responsive">
+        <form id="editFrm" method="post" enctype="multipart/form-data">
+            <table class="table table-edit">
+                <colgroup>
+                    <col width="10%" />
+                    <col width="90%" />
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="col">제품명</th>
+                    <td>
+                        <input type="hidden" name="productName" th:value="${product.productName}">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">파일</th>
+                    <td>
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control" aria-describedby="inputGroupFileAddon04" aria-label="Upload"  id="productFile"  name="productFile">
+                            <button class="btn btn-secondary" type="button" onclick="fileDown();">다운로드</button>
+                            <!--<a href="javascript:confirm('파일을 삭제하시겠습니까?')" class="btn btn-danger" type="button" id="inputGroupFileAddon04">삭제</a>-->
+                        </div>
+                        <div class="attention">
+                            <dl>
+                                <dt class="red"><i class="bi bi-exclamation-circle"></i> 파일 업로드 유의사항</dt>
+                                <dd>- 이미지 규격 : 000px x 000px</dd>
+                                <dd>- 등록가능 파일 : 2MB 이하 jpg, png, pdf 파일</dd>
+                            </dl>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-md-flex justify-content-md-end">
+                <a href="javascript:void(0);" id="btnCancel" class="btn btn-secondary me-md-2" type="button">취소</a>
+                <a href="javascript:void(0);" id="btnEdit" class="btn btn-primary" type="button">등록</a>
+            </div>
+        </form>
+    </div>
+</div>
+</html>
+<script th:inline="javascript">
+    $("#btnCancel").click(function() {
+        if(confirm('배너 등록을 취소하시겠습니까?')){
+            location.reload();
+        }
+    });
+
+    $("#btnEdit").click(function() {
+        if(confirm('등록을 완료 하시겠습니까?')){
+            var form = $('#editFrm')[0];
+            var data = new FormData(form);
+
+            $.ajax({
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                url: '/product/modify',
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function (data) {
+                    if(data.result == "success"){
+                        alert("정상적으로 수정되었습니다.");
+                        location.href= "/" + [[${menuCode}]] +  "/list/" + [[${brandCode}]];
+                    } else {
+                        alert(data.message);
+                    }
+                },
+                error: function (e) {
+                    alert(e.responseText);
+                    //console.log('ERROR : ', e);
+                }
+            });
+        }
+    });
+
+    function fileDown() {
+        window.location.href="/product/download/"  + [[${product.productName}]];
+    }
+</script>
