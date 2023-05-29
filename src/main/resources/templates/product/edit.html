@@ -22,7 +22,7 @@
     </div>
     <div class="table-responsive">
         <form id="editFrm" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="productName" th:value="${product.productName}">
+            <input type="hidden" name="oldProductName" th:value="${product.productName}">
             <table class="table table-edit">
                 <colgroup>
                     <col width="10%" />
@@ -34,8 +34,10 @@
                     <td th:text="${product.productOrder}"></td>
                 </tr>
                 <tr>
-                    <th scope="col">제목</th>
-                    <td th:text="${product.productName}"></td>
+                    <th scope="col">제품명</th>
+                    <td>
+                        <input class="form-control col-md-8" type="text" name="productName" maxlength="50" th:value="${product.productName}">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="col">파일</th>
@@ -66,13 +68,15 @@
 </html>
 <script th:inline="javascript">
     $("#btnCancel").click(function() {
-        if(confirm('배너 등록을 취소하시겠습니까?')){
+        if(confirm('제품 등록을 취소하시겠습니까?')){
             location.reload();
         }
     });
 
     $("#btnEdit").click(function() {
-        if(confirm('등록을 완료 하시겠습니까?')){
+        if($("#productName").val() == "") {
+            alert("제품명을 입력하세요.");
+        } else {
             var form = $('#editFrm')[0];
             var data = new FormData(form);
 

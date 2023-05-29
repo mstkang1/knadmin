@@ -18,10 +18,15 @@
 <div class="admin-contents" layout:fragment="content">
     <div class="admin-contents-header">
         <h2>제품설명</h2>
-        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt;  [[${product.brandName}]] &gt; 제품설명 </div>
+        <div class="path"><i class="bi bi-house-door-fill"></i> 메인 &gt;
+            <th:block th:if="${brandCode == 'M'}"> 미놀 </th:block>
+            <th:block th:if="${brandCode == 'P'}"> PM </th:block>
+            <th:block th:if="${brandCode == 'J'}"> 자하 </th:block>
+            &gt; 제품설명 </div>
     </div>
     <div class="table-responsive">
         <form id="editFrm" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="brandCode" th:value="${brandCode}">
             <table class="table table-edit">
                 <colgroup>
                     <col width="10%" />
@@ -31,7 +36,7 @@
                 <tr>
                     <th scope="col">제품명</th>
                     <td>
-                        <input type="hidden" name="productName" th:value="${product.productName}">
+                        <input class="form-control col-md-8" type="text" name="productName" maxlength="50">
                     </td>
                 </tr>
                 <tr>
@@ -39,8 +44,6 @@
                     <td>
                         <div class="input-group mb-3">
                             <input type="file" class="form-control" aria-describedby="inputGroupFileAddon04" aria-label="Upload"  id="productFile"  name="productFile">
-                            <button class="btn btn-secondary" type="button" onclick="fileDown();">다운로드</button>
-                            <!--<a href="javascript:confirm('파일을 삭제하시겠습니까?')" class="btn btn-danger" type="button" id="inputGroupFileAddon04">삭제</a>-->
                         </div>
                         <div class="attention">
                             <dl>
@@ -63,29 +66,33 @@
 </html>
 <script th:inline="javascript">
     $("#btnCancel").click(function() {
-        if(confirm('배너 등록을 취소하시겠습니까?')){
+        if(confirm('제품 등록을 취소하시겠습니까?')){
             location.reload();
         }
     });
 
     $("#btnEdit").click(function() {
-        if(confirm('등록을 완료 하시겠습니까?')){
+        if($("#productName").val() == "") {
+            alert("제품명을 입력하세요.");
+        } else if($("#productFile").val() == "")  {
+            alert("제품설명 파일을 등록하세요.");
+        } else {
             var form = $('#editFrm')[0];
             var data = new FormData(form);
 
             $.ajax({
                 type: 'POST',
                 enctype: 'multipart/form-data',
-                url: '/product/modify',
+                url: '/product/create',
                 data: data,
                 processData: false,
                 contentType: false,
                 cache: false,
                 timeout: 600000,
                 success: function (data) {
-                    if(data.result == "success"){
+                    if (data.result == "success") {
                         alert("정상적으로 수정되었습니다.");
-                        location.href= "/" + [[${menuCode}]] +  "/list/" + [[${brandCode}]];
+                        location.href = "/" + [[${menuCode}]] + "/list/" + [[${brandCode}]];
                     } else {
                         alert(data.message);
                     }
@@ -97,8 +104,4 @@
             });
         }
     });
-
-    function fileDown() {
-        window.location.href="/product/download/"  + [[${product.productName}]];
-    }
 </script>

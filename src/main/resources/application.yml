@@ -30,7 +30,7 @@ spring:
       location: "C:\\upload"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/knpharm?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/knpharm?serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: root
     password: master
   devtools:
@@ -40,6 +40,12 @@ spring:
       enabled: true
   thymeleaf:
     cache: false # 개발시에는 수정시 즉시 반영 가능하게.
+naver:
+  url:
+    geocoding: https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode
+  client:
+    id: l2o6xz5abj
+    secret: 3ulkg7WHEZuhYYTysTOkg44xHv7iCqHHfJO8Hgu1
 server:
   port: 88
 
@@ -53,7 +59,7 @@ spring:
       location: "/data/upload/dev"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/kntest?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/kntest?serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: kndev
     password: dev@w2w
   devtools:
@@ -63,6 +69,12 @@ spring:
       enabled: true
   thymeleaf:
     cache: false # 개발시에는 수정시 즉시 반영 가능하게.
+naver:
+  url:
+    geocoding: https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode
+  client:
+    id: l2o6xz5abj
+    secret: 3ulkg7WHEZuhYYTysTOkg44xHv7iCqHHfJO8Hgu1
 server:
   port: 8073
   error:
@@ -78,10 +90,16 @@ spring:
       location: "/data/upload/prod"
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/knpharm?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/knpharm?serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: knadmin
     password: kn@w2w
   thymeleaf:
     cache: true
+naver:
+  url:
+    geocoding: https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode
+  client:
+    id: bsj7qymjt7
+    secret: DdeJ5OJrizJcL6SOPW6M3KNnmohmnBzZie0IVlOX
 server:
   port: 8083

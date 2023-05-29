@@ -3,6 +3,7 @@ package com.knpharm.knadmin.web;
 import com.knpharm.knadmin.dto.PopupDto;
 import com.knpharm.knadmin.dto.ProductDto;
 import com.knpharm.knadmin.service.product.ProductService;
+import com.knpharm.knadmin.service.store.StoreService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,9 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private StoreService storeService;
+
     @Value("${spring.servlet.multipart.location}")
     private String uploadPath;
 
@@ -47,6 +51,15 @@ public class ProductController {
         model.addAttribute("productList", productList);
 
         return "product/list";
+    }
+
+    @RequestMapping(value = "/write/{brandCode}")
+    public  String write(@PathVariable("brandCode") String brandCode, Model model) throws Exception {
+
+        model.addAttribute("menuCode", "product");
+        model.addAttribute("brandCode", brandCode);
+
+        return "product/write";
     }
 
     @RequestMapping(value = "/edit/{brandCode}/{productName}")
@@ -69,26 +82,35 @@ public class ProductController {
 
         Map<String, Object> rtnObj = new HashMap<>();
 
+        if(!product.getProductName().equals(product.getOldProductName())) {
+            ProductDto oldProcuct = productService.selectProduct(product.getProductName());
+            if(oldProcuct != null) {
+                rtnObj.put("result", "fail");
+                rtnObj.put("message", "이미 등록된 제품명입니다.");
+                return rtnObj;
+            }
+        }
 
-        if(files.length < 0) {
+
+        if (files.length < 0) {
             rtnObj.put("result", "fail");
             rtnObj.put("message", "잘못된 접근입니다.");
             return rtnObj;
         } else {
             MultipartFile productFile = files[0];
-            if(!productFile.isEmpty()) {
+            if (!productFile.isEmpty()) {
                 String originName = productFile.getOriginalFilename();//파일이름
-                String exten = originName.substring(originName.lastIndexOf("."),originName.length());//확장자
+                String exten = originName.substring(originName.lastIndexOf("."), originName.length());//확장자
                 String random = "";//랜덤값
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
-                int rndNum = (int)(Math.random()*100000);
-                random = sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+exten;
+                int rndNum = (int) (Math.random() * 100000);
+                random = sdf.format(new Date(System.currentTimeMillis())) + "_" + rndNum + exten;
                 productFile.transferTo(new File(random));
 
                 product.setProductOrgFileName(originName);
                 product.setProductSaveFileName(random);
 
-                if(!(exten.equalsIgnoreCase(".jpg") || exten.equalsIgnoreCase(".jpeg") || exten.equalsIgnoreCase(".gif") ||
+                if (!(exten.equalsIgnoreCase(".jpg") || exten.equalsIgnoreCase(".jpeg") || exten.equalsIgnoreCase(".gif") ||
                         exten.equalsIgnoreCase(".png") || exten.equalsIgnoreCase(".bmp") ||
                         exten.equalsIgnoreCase(".pdf") || exten.equalsIgnoreCase(".zip") || exten.equalsIgnoreCase(".docx") ||
                         exten.equalsIgnoreCase(".doc"))) {
@@ -100,10 +122,64 @@ public class ProductController {
         }
 
         logger.info("product -> " + product.toString());
-
         productService.updateProduct(product);
+        storeService.updateStoreProduct(product);
 
         rtnObj.put("result", "success");
+        return rtnObj;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public Map<String, Object> create(
+            ProductDto product,@RequestParam("productFile") MultipartFile[] files ) throws Exception {
+
+        Map<String, Object> rtnObj = new HashMap<>();
+
+        ProductDto oldProcuct = productService.selectProduct(product.getProductName());
+        if(oldProcuct != null) {
+            rtnObj.put("result", "fail");
+            rtnObj.put("message", "이미 등록된 제품명입니다.");
+        } else {
+            if(files.length < 0) {
+                rtnObj.put("result", "fail");
+                rtnObj.put("message", "잘못된 접근입니다.");
+                return rtnObj;
+            } else {
+                MultipartFile productFile = files[0];
+                if(!productFile.isEmpty()) {
+                    String originName = productFile.getOriginalFilename();//파일이름
+                    String exten = originName.substring(originName.lastIndexOf("."),originName.length());//확장자
+                    String random = "";//랜덤값
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+                    int rndNum = (int)(Math.random()*100000);
+                    random = sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+exten;
+                    productFile.transferTo(new File(random));
+
+                    product.setProductOrgFileName(originName);
+                    product.setProductSaveFileName(random);
+
+                    if(!(exten.equalsIgnoreCase(".jpg") || exten.equalsIgnoreCase(".jpeg") || exten.equalsIgnoreCase(".gif") ||
+                            exten.equalsIgnoreCase(".png") || exten.equalsIgnoreCase(".bmp") ||
+                            exten.equalsIgnoreCase(".pdf") || exten.equalsIgnoreCase(".zip") || exten.equalsIgnoreCase(".docx") ||
+                            exten.equalsIgnoreCase(".doc"))) {
+                        rtnObj.put("result", "fail");
+                        rtnObj.put("message", "잘못된 형식의 파일입니다.(jpg, jpeg, gif, png, bmp, pdf, zip, doc, docx만 가능)");
+                        return rtnObj;
+                    }
+                }
+            }
+
+            logger.info("product -> " + product.toString());
+
+            productService.insertProduct(product);
+
+            rtnObj.put("result", "success");
+        }
+
+
+
         return rtnObj;
     }
 

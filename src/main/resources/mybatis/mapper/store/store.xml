@@ -23,5 +23,25 @@
         WHERE distance  <= #{distance} * 10000
         ]]>
     </select>
+    <update  id="updateStoreProduct" parameterType="ProductDto">
+        UPDATE TBL_STORE SET PRODUCT_NAME = #{productName}
+        WHERE PRODUCT_NAME = #{oldProductName}
+    </update>
+
+    <insert id="insertStore" parameterType="StoreDto">
+        INSERT INTO TBL_STORE (BRAND_CODE, PRODUCT_NAME, PH_CODE, STORE_NAME, LOCATION1,
+                               LOCATION2, ADDRESS, PHONE, LATITUDE, LONGITUDE,
+                               REGDATE, MODDATE, IS_NEW) VALUES
+        <foreach collection="list" item="value"  separator=",">
+            (#{value.brandCode}, #{value.productName}, #{value.phCode}, #{value.storeName}, #{value.location1},
+             #{value.location2}, #{value.address}, #{value.phone}, #{value.latitude}, #{value.longitude},
+             now(), now(), 0)
+        </foreach>
+    </insert>
+
+    <update id="changeStore">
+        DELETE FROM TBL_STORE WHERE IS_NEW = 1;
+        UPDATE TBL_STORE SET IS_NEW = 1;
+    </update>
 
 </mapper>

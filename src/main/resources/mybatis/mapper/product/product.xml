@@ -25,18 +25,30 @@
         ]]>
     </select>
 
+    <select id="checkProductName" parameterType="ProductDto" resultType="int">
+        <![CDATA[
+        SELECT
+            COUNT(*)
+        FROM TBL_PRODUCT
+        WHERE PRODUCT_NAME = #{productName} AND PRODUCT_NAME != #{oldProductName}
+        ]]>
+    </select>
+
     <update id="updateProduct" parameterType="ProductDto">
         UPDATE TBL_PRODUCT SET
-            PRODUCT_ORG_FILE_NAME = #{productOrgFileName},
-            PRODUCT_SAVE_FILE_NAME = #{productSaveFileName},
+            PRODUCT_NAME = #{productName},
+            <if test="productOrgFileName != null">
+                PRODUCT_ORG_FILE_NAME = #{productOrgFileName},
+                PRODUCT_SAVE_FILE_NAME = #{productSaveFileName},
+            </if>
             MODDATE = now()
-        WHERE PRODUCT_NAME = #{productName}
+        WHERE PRODUCT_NAME = #{oldProductName}
     </update>
 
 
-    <!--<insert id="insertProduct" parameterType="ProductDto">
+    <insert id="insertProduct" parameterType="ProductDto">
         INSERT INTO TBL_PRODUCT (PRODUCT_NAME, BRAND_CODE, PRODUCT_ORDER, PRODUCT_ORG_FILE_NAME, PRODUCT_SAVE_FILE_NAME, REGDATE, MODDATE) VALUES
-       (#{productName}, #{brandCode}, (SELECT MAX(PRODUCT_ORDER) + 1 FROM TBL_PRODUCT WHERE BRAND_CODE = #{brandCode}), #{productOrgFileName}, #{productSaveFileName}, now(), now())
-    </insert>-->
+       (#{productName}, #{brandCode}, FN_GET_NEXT_ORDER(#{brandCode}), #{productOrgFileName}, #{productSaveFileName}, now(), now())
+    </insert>
 
 </mapper>

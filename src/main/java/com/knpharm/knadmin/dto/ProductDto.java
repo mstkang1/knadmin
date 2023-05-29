@@ -12,4 +12,7 @@ public class ProductDto {
 
     private String brandName;
 
+    /*수정전 제품명*/
+    private String oldProductName;
+
 }

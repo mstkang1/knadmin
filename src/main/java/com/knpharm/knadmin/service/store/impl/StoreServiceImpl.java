@@ -1,5 +1,6 @@
 package com.knpharm.knadmin.service.store.impl;
 
+import com.knpharm.knadmin.dto.ProductDto;
 import com.knpharm.knadmin.dto.StoreDto;
 import com.knpharm.knadmin.mapper.StoreMapper;
 import com.knpharm.knadmin.service.store.StoreService;
@@ -17,4 +18,20 @@ public class StoreServiceImpl implements StoreService {
     public List<StoreDto> selectStoreList(StoreDto storeDto) throws Exception {
         return storeMapper.selectStoreList(storeDto);
     }
+
+    @Override
+    public int updateStoreProduct(ProductDto productDto) throws Exception {
+        return storeMapper.updateStoreProduct(productDto);
+    }
+
+    @Override
+    public int insertStore(List<StoreDto> storeList) throws Exception {
+        return storeMapper.insertStore(storeList);
+    }
+
+    @Override
+    public int changeStore() throws Exception {
+        return storeMapper.changeStore();
+    }
+
 }

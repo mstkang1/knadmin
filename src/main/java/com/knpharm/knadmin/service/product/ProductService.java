@@ -11,4 +11,8 @@ public interface ProductService {
 
     int updateProduct(ProductDto productDto) throws Exception;
 
+    int checkProductName(ProductDto productDto) throws Exception;
+
+    int insertProduct(ProductDto productDto) throws Exception;
+
 }
