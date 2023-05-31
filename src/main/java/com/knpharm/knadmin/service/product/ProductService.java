@@ -15,4 +15,6 @@ public interface ProductService {
 
     int insertProduct(ProductDto productDto) throws Exception;
 
+    int deleteProduct(String productName) throws Exception;
+
 }

@@ -44,4 +44,9 @@ public class StoreServiceImpl implements StoreService {
         return storeMapper.rollbackStore();
     }
 
+    @Override
+    public int deleteStore(String productName) throws Exception {
+        return storeMapper.deleteStore(productName);
+    }
+
 }

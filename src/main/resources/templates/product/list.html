@@ -50,7 +50,9 @@
                 </tbody>
             </table>
         </form>
-        <a th:href="@{../write/{brandCode}(brandCode=${brandCode})}" th:text="등록" class="btn btn-secondary btn-sm"></a>
+        <div class="d-md-flex justify-content-md-end">
+            <a th:href="@{../write/{brandCode}(brandCode=${brandCode})}" th:text="등록" class="btn btn btn-primary"></a>
+        </div>
     </div>
 </div>
 </html>

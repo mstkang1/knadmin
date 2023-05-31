@@ -183,6 +183,21 @@ public class ProductController {
         return rtnObj;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/remove", method = RequestMethod.POST)
+    public Map<String, Object> remove(ProductDto product) throws Exception {
+
+        Map<String, Object> rtnObj = new HashMap<>();
+
+        productService.deleteProduct(product.getOldProductName());
+
+        storeService.deleteStore(product.getOldProductName());
+
+        rtnObj.put("result", "success");
+
+        return rtnObj;
+    }
+
     @RequestMapping("/download/{productName}")
     public void process(@PathVariable(name = "productName") String productName, HttpServletResponse response) throws Exception {
         try {

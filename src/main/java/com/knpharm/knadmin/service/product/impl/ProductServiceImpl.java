@@ -36,4 +36,9 @@ public class ProductServiceImpl implements ProductService {
     public int insertProduct(ProductDto productDto) throws Exception {
         return productMapper.insertProduct(productDto);
     }
+
+    @Override
+    public int deleteProduct(String productName) throws Exception {
+        return productMapper.deleteProduct(productName);
+    }
 }

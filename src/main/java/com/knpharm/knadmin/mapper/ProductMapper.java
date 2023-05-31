@@ -16,4 +16,6 @@ public interface ProductMapper {
     int checkProductName(ProductDto productDto) throws Exception;
 
     int insertProduct(ProductDto productDto) throws Exception;
+
+    int deleteProduct(String productName) throws Exception;
 }

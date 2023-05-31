@@ -51,4 +51,8 @@
        (#{productName}, #{brandCode}, FN_GET_NEXT_ORDER(#{brandCode}), #{productOrgFileName}, #{productSaveFileName}, now(), now())
     </insert>
 
+    <delete id="deleteProduct" parameterType="String">
+        DELETE FROM TBL_PRODUCT WHERE PRODUCT_NAME = #{productName}
+    </delete>
+
 </mapper>

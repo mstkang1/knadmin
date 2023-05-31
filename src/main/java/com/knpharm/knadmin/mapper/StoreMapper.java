@@ -18,4 +18,6 @@ public interface StoreMapper {
 
     int changeStore() throws Exception;
     int rollbackStore() throws Exception;
+
+    int deleteStore(String productName) throws Exception;
 }
