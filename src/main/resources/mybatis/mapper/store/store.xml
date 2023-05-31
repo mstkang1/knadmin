@@ -39,9 +39,22 @@
         </foreach>
     </insert>
 
+    <insert id="insertStoreEach" parameterType="StoreDto">
+        INSERT INTO TBL_STORE (BRAND_CODE, PRODUCT_NAME, PH_CODE, STORE_NAME, LOCATION1,
+        LOCATION2, ADDRESS, PHONE, LATITUDE, LONGITUDE,
+        REGDATE, MODDATE, IS_NEW) VALUES
+            (#{brandCode}, #{productName}, #{phCode}, #{storeName}, #{location1},
+            #{location2}, #{address}, #{phone}, #{latitude}, #{longitude},
+            now(), now(), 0)
+    </insert>
+
     <update id="changeStore">
         DELETE FROM TBL_STORE WHERE IS_NEW = 1;
         UPDATE TBL_STORE SET IS_NEW = 1;
+    </update>
+
+    <update id="rollbackStore">
+        DELETE FROM TBL_STORE WHERE IS_NEW = 0;
     </update>
 
 </mapper>

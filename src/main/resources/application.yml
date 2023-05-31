@@ -2,6 +2,10 @@
 server:
   tomcat:
     uri-encoding: UTF-8
+  servlet:
+    session:
+      timeout: 1800
+
 
 mybatis:
   type-aliases-package: com.knpharm.knadmin.dto
@@ -29,8 +33,8 @@ spring:
     multipart:
       location: "C:\\upload"
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/knpharm?serverTimezone=Asia/Seoul&allowMultiQueries=true
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://localhost:3306/knpharm?serverTimezone=Asia/Seoul&allowMultiQueries=true
     username: root
     password: master
   devtools:

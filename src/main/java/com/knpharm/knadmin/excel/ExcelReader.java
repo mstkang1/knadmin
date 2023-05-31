@@ -121,7 +121,7 @@ public class ExcelReader {
                                         break;
                                     case 6: //Address
                                         store.setAddress(value);
-                                    case 7: //Address
+                                    case 7: //Phone
                                         store.setPhone(value);
                                     default:
                                         break;
@@ -255,8 +255,10 @@ public class ExcelReader {
                                         break;
                                     case 6: //Address
                                         store.setAddress(value);
+                                        break;
                                     case 7: //Address
                                         store.setPhone(value);
+                                        break;
                                     default:
                                         break;
                                 }

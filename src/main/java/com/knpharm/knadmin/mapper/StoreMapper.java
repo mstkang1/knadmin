@@ -14,5 +14,8 @@ public interface StoreMapper {
 
     int insertStore(List<StoreDto> storeList) throws Exception;
 
+    int insertStoreEach(StoreDto storeDto) throws Exception;
+
     int changeStore() throws Exception;
+    int rollbackStore() throws Exception;
 }

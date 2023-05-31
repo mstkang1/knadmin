@@ -30,8 +30,18 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public int insertStoreEach(StoreDto storeDto) throws Exception {
+        return storeMapper.insertStoreEach(storeDto);
+    }
+
+    @Override
     public int changeStore() throws Exception {
         return storeMapper.changeStore();
+    }
+
+    @Override
+    public int rollbackStore() throws Exception {
+        return storeMapper.rollbackStore();
     }
 
 }

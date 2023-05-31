@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.*;
 
 
@@ -122,20 +124,41 @@ public class StoreController {
                         storeList = excelReader.xlsxToStoreList(filePath);
                     }
 
-                    for(int i = 0; i <storeList.size(); i++){
+                    /*for(int i = 0; i <storeList.size(); i++){
                      StoreDto store = searchGeoCoding(storeList.get(i).getAddress());
                          storeList.get(i).setLongitude(store.getLongitude());
                          storeList.get(i).setLatitude(store.getLatitude());
+                         storeService.insertStoreEach(storeList.get(i));
+                    }*/
+                    int cnt = 0;
+                    DecimalFormat decFormat = new DecimalFormat("###,###");
+
+                    try{
+                        for(int i = 0; i <storeList.size(); i++){
+                            StoreDto store = searchGeoCoding(storeList.get(i).getAddress());
+                            storeList.get(i).setLongitude(store.getLongitude());
+                            storeList.get(i).setLatitude(store.getLatitude());
+                            storeService.insertStoreEach(storeList.get(i));
+                            cnt++;
+                        }
+                        //storeService.insertStore(storeList);
+                        storeService.changeStore();
+
+
+
+                        rtnObj.put("result", "success");
+                        rtnObj.put("message", decFormat.format(cnt) + "건이 정상적으로 업로드되었습니다.");
+                        return rtnObj;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+
+                        storeService.rollbackStore();
+
+                        rtnObj.put("result", "fail");
+                        rtnObj.put("message", decFormat.format(cnt + 2) + "열에서 오류가 발생하였습니다.");
+                        return rtnObj;
                     }
-
-
-                    storeService.insertStore(storeList);
-
-                    storeService.changeStore();
-
-                    rtnObj.put("result", "success");
-                    rtnObj.put("message", "정상적으로 업로드되었습니다.");
-                    return rtnObj;
+                    
                 }
             }
         }
