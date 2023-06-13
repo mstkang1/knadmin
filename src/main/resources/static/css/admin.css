@@ -238,4 +238,86 @@ table.table-edit td input, table.table-edit td label {
     vertical-align: middle;
     margin-right: 5px;
 }
+ul.info {
+    list-style-type: disc;
+    padding: 0 0 0 18px;
+}
+ul.info li {
+    line-height: 1.5;
+}
 
+
+
+.lodaing {
+    background: #fff;
+    border-radius: 0;
+    display: none;
+    height: 100%;
+    top: 0;
+    transform: unset;
+    left: 0;
+    width: 100%;
+    z-index: 1001;
+    position: fixed;
+    pointer-events: auto;
+}
+
+.lodaing img {
+    width: 80px;
+}
+
+.lodaing .popup-wrap {
+    align-items: center;
+    justify-content: center;
+}
+
+.layer-popup {
+    height: auto;
+    width: 300px;
+}
+
+.layer-popup .popup-wrap {
+    padding: 12px;
+}
+
+.layer-popup img {
+    margin: 0 0 12px 0;
+}
+
+@media screen and (max-width:576px) {
+    .lodaing {
+        background: #fff;
+        border-radius: 0;
+        display: none;
+        height: 100%;
+        top: 0;
+        transform: unset;
+        left: 0;
+        width: 100%;
+        z-index: 1001;
+        position: fixed;
+        pointer-events: auto;
+    }
+
+    .lodaing img {
+        width: 80px;
+    }
+
+    .lodaing .popup-wrap {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .layer-popup {
+        height: auto;
+        width: 264px;
+    }
+
+    .layer-popup .popup-wrap {
+        padding: 12px;
+    }
+
+    .layer-popup img {
+        margin: 0 0 12px 0;
+    }
+}

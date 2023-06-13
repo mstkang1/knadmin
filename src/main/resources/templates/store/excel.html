@@ -37,7 +37,12 @@
                             <!--<a href="javascript:confirm('파일을 삭제하시겠습니까?')" class="btn btn-danger" type="button" id="inputGroupFileAddon04">삭제</a>-->
                         </div>
                         <div class="excel-sample-file">
-                            <a href="/file/sample.xlsx"><img src="/img/excel-img.png" />엑셀 셈플 파일보기</a>
+                            <a href="/file/sample.xlsx"><img src="/img/excel-img.png" />엑셀 샘플 파일보기</a>
+                            <ul class="mt-3 info">
+                                <li>Brand는 미놀 : M / 자하생력 : J / 피엠 : P로 넣어주십시오.</li>
+                                <li>Product는 제품명을 띄어쓰기까지 맞춰서 넣어주셔야 검색이 됩니다.</li>
+                                <li>파일 업로드와 함께 위/경도 Data를 처리하기 때문에 10분 이상 작업이 소요됩니다.</li>
+                            </ul>
                         </div>
                     </td>
                 </tr>
@@ -45,10 +50,17 @@
             </form>
         </table>
     </div>
+    <!-- start -->
+    <div class="lodaing">
+        <div class="popup-wrap">
+            <img src="/img/lodaing.gif" alt="" onclick="lodaingClose('lodaing')">
+        </div>
+    </div>
+    <!-- end -->
 </div>
 </html>
 <script th:inline="javascript">
-
+    loadingOpen('lodaing');
     $("#btnUpload").click(function() {
         if($("#excelFile").val() == "") {
             alert("엑셀파일을 첨부하세요.");
@@ -65,8 +77,13 @@
                     processData: false,
                     contentType: false,
                     cache: false,
+                    beforeSend : function(request){
+                        // Performed before calling Ajax
+                        loadingOpen('lodaing');
+                    },
                     /*timeout: 600000,*/
                     success: function (data) {
+                        lodaingClose('lodaing');
                         if (data.result == "success") {
                             alert(data.message);
                             location.reload();
@@ -75,6 +92,7 @@
                         }
                     },
                     error: function (e) {
+                        lodaingClose('lodaing');
                         alert(e.responseText);
                         //console.log('ERROR : ', e);
                     }
@@ -82,4 +100,21 @@
             }
         }
     });
+
+
+
+    function loadingOpen(modalname) {
+        document.get
+        $("." + modalname).fadeIn(300);
+        $('body').css("pointer-events","none");
+        $('.lodaing').addClass('on');
+    }
+
+    function lodaingClose(modalname) {
+        document.get
+        $("." + modalname).fadeOut(300);
+        $('body').css("pointer-events","auto");
+        $('.lodaing').removeClass('on');
+    }
+
 </script>
