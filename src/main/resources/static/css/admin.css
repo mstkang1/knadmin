@@ -273,7 +273,7 @@ ul.info li {
 
 .layer-popup {
     height: auto;
-    width: 300px;
+    width: max-content;
 }
 
 .layer-popup .popup-wrap {
@@ -310,7 +310,7 @@ ul.info li {
 
     .layer-popup {
         height: auto;
-        width: 264px;
+        width: max-content;
     }
 
     .layer-popup .popup-wrap {
