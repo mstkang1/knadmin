@@ -50,17 +50,16 @@
             </form>
         </table>
     </div>
-    <!-- start -->
+
+    <!-- <button type="button" onclick="loadingOpen('lodaing')"></button> -->
     <div class="lodaing">
         <div class="popup-wrap">
-            <img src="/img/lodaing.gif" alt="" onclick="lodaingClose('lodaing')">
+            <img src="/img/lodaing.gif" alt="">
         </div>
     </div>
-    <!-- end -->
 </div>
 </html>
 <script th:inline="javascript">
-    loadingOpen('lodaing');
     $("#btnUpload").click(function() {
         if($("#excelFile").val() == "") {
             alert("엑셀파일을 첨부하세요.");
@@ -100,21 +99,4 @@
             }
         }
     });
-
-
-
-    function loadingOpen(modalname) {
-        document.get
-        $("." + modalname).fadeIn(300);
-        $('body').css("pointer-events","none");
-        $('.lodaing').addClass('on');
-    }
-
-    function lodaingClose(modalname) {
-        document.get
-        $("." + modalname).fadeOut(300);
-        $('body').css("pointer-events","auto");
-        $('.lodaing').removeClass('on');
-    }
-
 </script>

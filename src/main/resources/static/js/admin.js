@@ -10,3 +10,18 @@ $(function() {
         $(this).addClass('on');
     });
 });
+
+
+function loadingOpen(modalname) {
+    document.get
+    $("." + modalname).fadeIn(300);
+    $('body').css("pointer-events","none");
+    $('.lodaing').addClass('on');
+}
+
+function lodaingClose(modalname) {
+    document.get
+    $("." + modalname).fadeOut(300);
+    $('body').css("pointer-events","auto");
+    $('.lodaing').removeClass('on');
+}
