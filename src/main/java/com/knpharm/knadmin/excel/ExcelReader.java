@@ -205,38 +205,44 @@ public class ExcelReader {
                     if(!"".equals(curRow.getCell(0).getStringCellValue())) {
 
                         // cell탐색 for문
-                        for(int cellIndex = 0 ; cellIndex < curRow.getPhysicalNumberOfCells(); cellIndex++) {
+//                        for(int cellIndex = 0 ; cellIndex < curRow.getPhysicalNumberOfCells(); cellIndex++) {
+                        for(int cellIndex = 0 ; cellIndex < 8; cellIndex++) {
                             curCell = curRow.getCell(cellIndex);
 
                             if(true) {
                                 value = "";
-                                //cell스타일이 다르더라도 String 으로 반환받음
-                                switch (curCell.getCellType()){
-                                    case XSSFCell.CELL_TYPE_FORMULA:
-                                        value = curCell.getCellFormula();
-                                        break;
-                                    case XSSFCell.CELL_TYPE_NUMERIC:
-                                        value = curCell.getNumericCellValue()+"";
-                                        break;
-                                    case XSSFCell.CELL_TYPE_STRING:
-                                        value = curCell.getStringCellValue()+"";
-                                        break;
-                                    case XSSFCell.CELL_TYPE_BLANK:
-                                        value = curCell.getBooleanCellValue()+"";
-                                        break;
-                                    case XSSFCell.CELL_TYPE_ERROR:
-                                        value = curCell.getErrorCellValue()+"";
-                                        break;
-                                    default:
-                                        value = new String();
-                                        break;
+                                /*잘못 인식된 Null 처리*/
+                                if(curCell != null) {
+                                    //cell스타일이 다르더라도 String 으로 반환받음
+                                    switch (curCell.getCellType()){
+                                        case XSSFCell.CELL_TYPE_FORMULA:
+                                            value = curCell.getCellFormula();
+                                            break;
+                                        case XSSFCell.CELL_TYPE_NUMERIC:
+                                            value = curCell.getNumericCellValue()+"";
+                                            break;
+                                        case XSSFCell.CELL_TYPE_STRING:
+                                            value = curCell.getStringCellValue()+"";
+                                            break;
+                                        case XSSFCell.CELL_TYPE_BLANK:
+                                            value = curCell.getBooleanCellValue()+"";
+                                            break;
+                                        case XSSFCell.CELL_TYPE_ERROR:
+                                            value = curCell.getErrorCellValue()+"";
+                                            break;
+                                        default:
+                                            value = new String();
+                                            break;
+                                    }
                                 }
+
 
                                 //현재 column index에 따라서 vo에 입력
 
                                 switch(cellIndex) {
                                     case 0: //Brand
-                                        store.setBrandCode(brandMap.get(value).toString());
+                                        /*Brand 코드값 입력으로 변경작업 제거*/
+                                        store.setBrandCode(value);
                                         break;
                                     case 1://Product
                                         store.setProductName(value);
@@ -264,6 +270,7 @@ public class ExcelReader {
                                 }
                             }
                         }
+                        System.out.println(store);
                         //cell탐색 이후 vo추가
                         list.add(store);
                     }
